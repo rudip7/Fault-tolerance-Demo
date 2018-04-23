@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Custom Systems -->
+    <import resource="fixtures.systems.xml"/>
+
+    <!--************************************************************************
+    * Data Sets
+    *************************************************************************-->
+    
+    <bean id="dataset.dblp" parent="dataset.static.hdfs-2">
+		<constructor-arg name="src" value="/data/users/mholzemer/dblp.txt"/>
+		<constructor-arg name="dst" value="${system.hadoop-2.path.input}/dblp.txt"/>
+	</bean>
+	
+	<bean id="dataset.friendster" parent="dataset.static.hdfs-2">
+		<constructor-arg name="src" value="/data/users/mholzemer/com-friendster.ungraph.txt"/>
+		<constructor-arg name="dst" value="${system.hadoop-2.path.input}/com-friendster.ungraph.txt"/>
+	</bean>
+	
+	<bean id="dataset.orkut" parent="dataset.static.hdfs-2">
+		<constructor-arg name="src" value="/data/users/mholzemer/com-orkut.ungraph.txt"/>
+		<constructor-arg name="dst" value="${system.hadoop-2.path.input}/com-orkut.ungraph.txt"/>
+	</bean>
+	
+	<bean id="dataset.uk2005" parent="dataset.static.hdfs-2">
+		<constructor-arg name="src" value="/data/users/mholzemer/uk-2005-raw"/>
+		<constructor-arg name="dst" value="${system.hadoop-2.path.input}/uk-2005-raw"/>
+	</bean>
+	
+	<bean id="dataset.line" parent="dataset.static.hdfs-2">
+		<constructor-arg name="src" value="/data/users/mholzemer/circle-raw"/>
+		<constructor-arg name="dst" value="${system.hadoop-2.path.input}/circle-raw"/>
+	</bean>
+
+	<bean id="dataset.webbase" parent="dataset.static.hdfs-2">
+		<constructor-arg name="src" value="/data/users/mholzemer/webbase-raw"/>
+		<constructor-arg name="dst" value="${system.hadoop-2.path.input}/webbase-raw"/>
+	</bean>
+
+
+    <!--************************************************************************
+    * Experiments
+    *************************************************************************-->
+    <bean id="experiment.output.hdfs.pagerank" parent="experiment.output.hdfs-2">
+        <constructor-arg name="path" value="${system.hadoop-2.path.output}/pagerank"/>
+    </bean>
+	
+	<!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.webbase.checkpoint.concomp" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/webbase-raw ${system.hadoop-2.path.output}/concomp 11 6</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.webbase"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+
+<!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.webbase.failure-free.concomp" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/webbase-raw ${system.hadoop-2.path.output}/concomp 11 0</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.webbase"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+
+			    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.webbase.checkpoint-Tail.concomp" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulkLateCpt ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/webbase-raw ${system.hadoop-2.path.output}/concomp 11 6</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.webbase"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+	
+ <!-- labelprop experiment (flink) -->
+    <bean id="experiment.flink.webbase.failure-free.labelprop" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.LabelPropStandalone ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/webbase-raw ${system.hadoop-2.path.output}/labelprop 11 0</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.webbase"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.labelprop"/>
+        </constructor-arg>
+    </bean>
+	
+    
+            <!-- labelprop experiment (flink) -->
+    <bean id="experiment.flink.webbase.checkpoint.labelprop" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.LabelPropStandalone ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/webbase-raw ${system.hadoop-2.path.output}/labelprop 11 6</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.webbase"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.labelprop"/>
+        </constructor-arg>
+    </bean>
+
+	<bean id="experiment.flink.webbase.checkpoint-Tail.labelprop" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.LabelPropStandaloneLateCpt ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/webbase-raw ${system.hadoop-2.path.output}/labelprop 11 6</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.webbase"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.labelprop"/>
+        </constructor-arg>
+    </bean>
+	
+
+<!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.friendster.checkpoint.concomp" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/concomp 11 6</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+
+<!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.friendster.failure-free.concomp" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/concomp 11 0</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+
+			    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.friendster.checkpoint-Tail.concomp" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulkLateCpt ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/concomp 11 6</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+	
+ <!-- labelprop experiment (flink) -->
+    <bean id="experiment.flink.friendster.failure-free.labelprop" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.LabelPropStandalone ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/labelprop 11 0</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.labelprop"/>
+        </constructor-arg>
+    </bean>
+	
+    
+            <!-- labelprop experiment (flink) -->
+    <bean id="experiment.flink.friendster.checkpoint.labelprop" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.LabelPropStandalone ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/labelprop 11 6</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.labelprop"/>
+        </constructor-arg>
+    </bean>
+
+	<bean id="experiment.flink.friendster.checkpoint-Tail.labelprop" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.LabelPropStandaloneLateCpt ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/labelprop 11 6</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.labelprop"/>
+        </constructor-arg>
+    </bean>
+
+ <!-- labelprop experiment (flink) -->
+    <bean id="experiment.flink.webbase.failure-free.pagerank" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.PageRank ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/webbase-raw ${system.hadoop-2.path.output}/pagerank 118142155 11 0</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.webbase"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.pagerank"/>
+        </constructor-arg>
+    </bean>
+	
+    
+            <!-- labelprop experiment (flink) -->
+    <bean id="experiment.flink.webbase.checkpoint.pagerank" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.PageRank ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/webbase-raw ${system.hadoop-2.path.output}/pagerank 118142155 11 6</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.webbase"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.pagerank"/>
+        </constructor-arg>
+    </bean>
+
+	<bean id="experiment.flink.webbase.checkpoint-Tail.pagerank" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.PageRankLateCpt ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/webbase-raw ${system.hadoop-2.path.output}/pagerank 118142155 11 6</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.webbase"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.pagerank"/>
+        </constructor-arg>
+    </bean>
+	
+ <!-- labelprop experiment (flink) -->
+    <bean id="experiment.flink.friendster.failure-free.pagerank" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.PageRank ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/pagerank 65608366 11 0</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.pagerank"/>
+        </constructor-arg>
+    </bean>
+	
+    
+            <!-- labelprop experiment (flink) -->
+    <bean id="experiment.flink.friendster.checkpoint.pagerank" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.PageRank ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/pagerank 65608366 11 6</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.pagerank"/>
+        </constructor-arg>
+    </bean>
+
+	<bean id="experiment.flink.friendster.checkpoint-Tail.pagerank" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.PageRankLateCpt ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/pagerank 65608366 11 6</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.pagerank"/>
+        </constructor-arg>
+    </bean>
+
+    <!--************************************************************************
+    * Fixtures
+    *************************************************************************-->
+
+    <!-- fixtures for local development and testing -->
+    <bean id="flink.UNblocking" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+                <bean parent="experiment.flink.webbase.checkpoint.concomp">
+                    <constructor-arg name="name" value="webbase/concomp/checkpoint-6"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.webbase.failure-free.concomp">
+                    <constructor-arg name="name" value="webbase/concomp/failure-free"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.webbase.checkpoint-Tail.concomp">
+                    <constructor-arg name="name" value="webbase/concomp/checkpoint-Tail"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.webbase.checkpoint.pagerank">
+                    <constructor-arg name="name" value="webbase/pagerank/checkpoint-6"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.webbase.failure-free.pagerank">
+                    <constructor-arg name="name" value="webbase/pagerank/failure-free"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.webbase.checkpoint-Tail.pagerank">
+                    <constructor-arg name="name" value="webbase/pagerank/checkpoint-Tail"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.friendster.checkpoint.concomp">
+                    <constructor-arg name="name" value="friendster/concomp/checkpoint-6"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.friendster.failure-free.concomp">
+                    <constructor-arg name="name" value="friendster/concomp/failure-free"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.friendster.checkpoint-Tail.concomp">
+                    <constructor-arg name="name" value="friendster/concomp/checkpoint-Tail"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.friendster.checkpoint.pagerank">
+                    <constructor-arg name="name" value="friendster/pagerank/checkpoint-6"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.friendster.failure-free.pagerank">
+                    <constructor-arg name="name" value="friendster/pagerank/failure-free"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.friendster.checkpoint-Tail.pagerank">
+                    <constructor-arg name="name" value="friendster/pagerank/checkpoint-Tail"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+	
+</beans>

@@ -1,0 +1,57 @@
+rm -Rf /tmp/hadoop-rudi/
+
+bin/hadoop namenode -format
+
+sbin/start-dfs.sh
+
+bin/hdfs dfs -copyFromLocal /home/rudi/Fault-tolerance-Demo/inputs/11 hdfs://localhost:9000/
+
+bin/hdfs dfs -copyFromLocal /home/rudi/Fault-tolerance-Demo/inputs/clusters hdfs://localhost:9000/
+
+bin/hdfs dfs -mkdir hdfs://localhost:9000/checkpoint/
+
+
+
+php -S localhost:8200
+
+
+
+
+http://localhost:50070/
+
+
+
+
+Page Rank
+
+bin/flink run -v -c eu.stratosphere.procrustes.experiments.recovery.PageRank ../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 100 10 5
+
+Execution Plan Page Rank
+bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.PageRank ../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 100 10 5 > ii
+
+
+
+
+
+KMeans
+
+bin/flink run -v -c eu.stratosphere.procrustes.experiments.recovery.KMeansPureTuple ../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/input/clusters/part-00000 hdfs://localhost:9000/input/clusters/centroids hdfs://localhost:9000/outputKMeans 10 0
+
+
+
+./bin/spark-submit --class eu.stratosphere.procrustes.datagen.spark.SparkClusterGenerator /home/rudi/Fault-tolerance-Demo/procrustes-datagen-1.0-SNAPSHOT.jar spark://rudi-7:7077 4 10000 /home/rudi/Fault-tolerance-Demo/clusters-D3-K3.csv /home/rudi/Fault-tolerance-Demo/outputs/clusters
+
+
+
+
+OLD -------------------------------------------------------------------------------------------------------------------
+
+rm -Rf /tmp/hadoop-rudi/
+
+bin/hadoop namenode -format
+
+sbin/start-dfs.sh
+
+bin/hdfs dfs -copyFromLocal /home/rudi/Fault-tolerance-Demo/outputs/11 hdfs://localhost:9000/
+
+bin/hdfs dfs -mkdir hdfs://localhost:9000/checkpoint/

@@ -1,0 +1,836 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Custom Systems -->
+    <import resource="fixtures.systems.xml"/>
+
+    <!--************************************************************************
+    * Data Sets
+    *************************************************************************-->
+    
+    <bean id="dataset.dblp" parent="dataset.static.hdfs-2">
+		<constructor-arg name="src" value="/data/users/mholzemer/dblp.txt"/>
+		<constructor-arg name="dst" value="${system.hadoop-2.path.input}/dblp.txt"/>
+	</bean>
+	
+	<bean id="dataset.friendster" parent="dataset.static.hdfs-2">
+		<constructor-arg name="src" value="/data/users/mholzemer/com-friendster.ungraph.txt"/>
+		<constructor-arg name="dst" value="${system.hadoop-2.path.input}/com-friendster.ungraph.txt"/>
+	</bean>
+	
+	<bean id="dataset.orkut" parent="dataset.static.hdfs-2">
+		<constructor-arg name="src" value="/data/users/mholzemer/com-orkut.ungraph.txt"/>
+		<constructor-arg name="dst" value="${system.hadoop-2.path.input}/com-orkut.ungraph.txt"/>
+	</bean>
+	
+	<bean id="dataset.uk2005" parent="dataset.static.hdfs-2">
+		<constructor-arg name="src" value="/data/users/mholzemer/uk-2005-raw"/>
+		<constructor-arg name="dst" value="${system.hadoop-2.path.input}/uk-2005-raw"/>
+	</bean>
+	
+	<bean id="dataset.line" parent="dataset.static.hdfs-2">
+		<constructor-arg name="src" value="/data/users/mholzemer/circle-raw"/>
+		<constructor-arg name="dst" value="${system.hadoop-2.path.input}/circle-raw"/>
+	</bean>
+
+
+    <!--************************************************************************
+    * Experiments
+    *************************************************************************-->
+
+    <!-- k-means output -->
+    <bean id="experiment.output.hdfs.concomp" parent="experiment.output.hdfs-2">
+        <constructor-arg name="path" value="${system.hadoop-2.path.output}/concomp"/>
+    </bean>
+	
+	<!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompAlt" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulkAlternative ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/concomp 10 0</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+	
+		<!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompAlt4" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulkAlternative ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/concomp 10 4</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+
+    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompBulk" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/concomp 10 0</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+	
+	<bean id="experiment.flink.concompBulkline" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/circle-raw ${system.hadoop-2.path.output}/concomp 10 0</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.line"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+	
+	<bean id="experiment.flink.concompBulkuk" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/uk-2005-raw ${system.hadoop-2.path.output}/concomp 10 0</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.uk2005"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+	
+    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompBulk1" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/concomp 5 1</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+	
+	    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompBulk2" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/circle-raw ${system.hadoop-2.path.output}/concomp 6 2</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.line"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+    
+    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompBulk4" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/concomp 10 4</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+	
+	    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompBulk4line" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/circle-raw ${system.hadoop-2.path.output}/concomp 10 4</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.line"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+	
+		    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompBulk4uk" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/uk-2005-raw ${system.hadoop-2.path.output}/concomp 10 4</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.uk2005"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+	
+	    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompBulk4late" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulkLateCpt ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/concomp 10 4</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+	
+		    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompBulk4lateline" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulkLateCpt ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/circle-raw ${system.hadoop-2.path.output}/concomp 10 4</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.line"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+	
+			    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompBulk4lateuk" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulkLateCpt ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/uk-2005-raw ${system.hadoop-2.path.output}/concomp 10 4</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.uk2005"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+    
+    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompBulk4.recovery" parent="experiment.flink-0.9-SNAPSHOT-mholzemer-reset" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/com-friendster.ungraph.txt ${system.hadoop-2.path.output}/concomp 10 4</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.friendster"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+    
+    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompDelta" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponents ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/uk-2005-raw ${system.hadoop-2.path.output}/concomp 10 0</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.uk2005"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+    
+    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompDelta4" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponents ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/uk-2005-raw ${system.hadoop-2.path.output}/concomp 10 4</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.uk2005"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+	
+	    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompDeltaline" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponents ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/circle-raw ${system.hadoop-2.path.output}/concomp 10 0</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.line"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+    
+    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompDelta4line" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponents ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/circle-raw  ${system.hadoop-2.path.output}/concomp 10 4</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.line"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+    
+    <!-- concomp experiment (flink) -->
+    <bean id="experiment.flink.concompDelta4.recovery" parent="experiment.flink-0.9-SNAPSHOT-mholzemer-reset" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponents ${app.path.jobs}/procrustes-flink-1.0.SNAPSHOT.jar ${system.hadoop-2.path.input}/circle-raw ${system.hadoop-2.path.output}/concomp 10 4</value>
+        </constructor-arg>
+        <constructor-arg name="input">
+        	<ref bean="dataset.line"/>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.concomp"/>
+        </constructor-arg>
+    </bean>
+
+    <!--************************************************************************
+    * Fixtures
+    *************************************************************************-->
+
+    <!-- fixtures for local development and testing -->
+    <bean id="concomp.default" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+                <bean parent="experiment.flink.concompBulk">
+                    <constructor-arg name="name" value="concompBulk.run"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk1">
+                    <constructor-arg name="name" value="concompBulk.run-chpt1"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk1">
+                    <constructor-arg name="name" value="concompBulk.run-chpt1-recov-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk4late">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-late"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4.recovery">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-recov"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk2">
+                    <constructor-arg name="name" value="concompBulk.run-chpt2-recov-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-recov-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompDelta">
+                    <constructor-arg name="name" value="concompDelta.run"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompDelta4">
+                    <constructor-arg name="name" value="concompDelta.run-chpt4"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.delta.checkpoint = 4
+                        </value>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompDelta4.recovery">
+                    <constructor-arg name="name" value="concompDelta.run-chpt4-recov"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.delta.checkpoint = 4
+                        </value>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompDelta4">
+                    <constructor-arg name="name" value="concompDelta.run-chpt4-recov-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.delta.checkpoint = 4
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+	
+	    <!-- fixtures for local development and testing -->
+    <bean id="concomp.cascading" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-recov"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-recov-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+	
+	    <!-- fixtures for local development and testing -->
+    <bean id="concomp.blockingCheckpoint" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+			    <bean parent="experiment.flink.concompBulkline">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-blocking"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.delta.checkpoint = 4
+                        </value>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulkline">
+                    <constructor-arg name="name" value="concompBulk.run-chpt8-blocking"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.delta.checkpoint = 8
+                        </value>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulkuk">
+                    <constructor-arg name="name" value="concompBulk.runuk-chpt4-blocking"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.delta.checkpoint = 4
+                        </value>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulkuk">
+                    <constructor-arg name="name" value="concompBulk.runuk-chpt8-blocking"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.delta.checkpoint = 8
+                        </value>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4line">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulkline">
+                    <constructor-arg name="name" value="concompBulk.run"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4uk">
+                    <constructor-arg name="name" value="concompBulk.runuk-chpt4"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulkuk">
+                    <constructor-arg name="name" value="concompBulk.runuk"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+	
+	 <!-- fixtures for local development and testing -->
+    <bean id="concomp.uk2005" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk4late">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-late"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompDelta">
+                    <constructor-arg name="name" value="concompDelta.run"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompDelta4">
+                    <constructor-arg name="name" value="concompDelta.run-chpt4"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.delta.checkpoint = 4
+                        </value>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompDelta4">
+                    <constructor-arg name="name" value="concompDelta.run-chpt4-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.delta.checkpoint = 4
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+	
+	<bean id="concomp.line" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+			    <bean parent="experiment.flink.concompBulk">
+                    <constructor-arg name="name" value="concompBulk.run"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk4late">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-late"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+	
+	<bean id="concomp.line2" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+			    <bean parent="experiment.flink.concompBulk">
+                    <constructor-arg name="name" value="concompBulk.run"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk4late">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-late"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk2">
+                    <constructor-arg name="name" value="concompBulk.run-chpt2"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+	
+	<bean id="concomp.checkpointPlacement" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+			    <bean parent="experiment.flink.concompAlt">
+                    <constructor-arg name="name" value="concompBulk.run"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompAlt4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+	
+	<bean id="concomp.line3" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+				<bean parent="experiment.flink.concompBulk2">
+                    <constructor-arg name="name" value="concompBulk.run-chpt2"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+	
+	<bean id="concomp.dop16" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+			    <bean parent="experiment.flink.concompBulk">
+                    <constructor-arg name="name" value="concompBulk.run"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk4late">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-late"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+	
+	<bean id="concomp.dop16line" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+				 <bean parent="experiment.flink.concompBulkline">
+                    <constructor-arg name="name" value="concompBulk.runline"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4line">
+                    <constructor-arg name="name" value="concompBulk.runline-chpt4"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk4lateline">
+                    <constructor-arg name="name" value="concompBulk.runline-chpt4-late"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <!--<bean parent="experiment.flink.concompBulk4line">
+                    <constructor-arg name="name" value="concompBulk.runline-chpt4-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+			    <bean parent="experiment.flink.concompBulk">
+                    <constructor-arg name="name" value="concompBulk.run"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk4late">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-late"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4">
+                    <constructor-arg name="name" value="concompBulk.run-chpt4-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>-->
+				
+            </list>
+        </constructor-arg>
+    </bean>
+	
+		<bean id="concomp.dop8all" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+				 <bean parent="experiment.flink.concompBulkline">
+                    <constructor-arg name="name" value="concompBulk.runline"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4line">
+                    <constructor-arg name="name" value="concompBulk.runline-chpt4"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk4lateline">
+                    <constructor-arg name="name" value="concompBulk.runline-chpt4-late"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulkuk">
+                    <constructor-arg name="name" value="concompBulk.runuk"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompBulk4uk">
+                    <constructor-arg name="name" value="concompBulk.runuk-chpt4"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk4lateuk">
+                    <constructor-arg name="name" value="concompBulk.runuk-chpt4-late"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk4line">
+                    <constructor-arg name="name" value="concompBulk.runline-chpt4-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompBulk4uk">
+                    <constructor-arg name="name" value="concompBulk.runuk-chpt4-confined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+	
+	<bean id="concomp.delta" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+                <bean parent="experiment.flink.concompDelta">
+                    <constructor-arg name="name" value="concompDelta.run"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompDelta4">
+                    <constructor-arg name="name" value="concompDelta.run-chpt4"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.delta.checkpoint = 4
+                        </value>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompDeltaline">
+                    <constructor-arg name="name" value="concompDelta.runline"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompDelta4line">
+                    <constructor-arg name="name" value="concompDelta.runline-chpt4"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.delta.checkpoint = 4
+                        </value>
+                    </constructor-arg>
+                </bean>
+				<bean parent="experiment.flink.concompDelta4line">
+                    <constructor-arg name="name" value="concompDelta.runline-chpt4-refined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.delta.checkpoint = 4
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+                <bean parent="experiment.flink.concompDelta4">
+                    <constructor-arg name="name" value="concompDelta.run-chpt4-refined"/>
+                    <constructor-arg name="config">
+                        <value>
+                            system.flink.config.yaml.delta.checkpoint = 4
+                            system.flink.config.yaml.refined.recovery = true
+                        </value>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+	
+</beans>

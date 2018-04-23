@@ -1,0 +1,450 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<html>
+<head>
+  <title>Fault Tolerance and Recovery System overview</title>
+
+
+
+  
+
+
+
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="../css/nephelefrontend.css" />
+  <link rel="stylesheet" type="text/css" href="../css/pactgraphs.css" />
+  <link rel="stylesheet" type="text/css" href="../css/graph.css" />
+  <link rel="stylesheet" type="text/css" href="../css/overlay.css" />
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+  <script type="text/javascript" src="../js/jquery-2.1.0.js"></script>
+  <script type="text/javascript" src="../js/graphCreator.js"></script>
+  <script type="text/javascript" src="../js/d3.js" charset="utf-8"></script>
+  <script type="text/javascript" src="../js/dagre-d3.js"></script>
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.tools.min.js"></script>
+  <script type="text/javascript" src="../js/go-debug.js"></script>
+  <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+  
+  <style>
+  div.menuStyle {
+    width:20%;
+    height: 100%;
+    margin: auto;
+    padding: 15px;
+    float:left;
+    border-right: 1px solid #262A37;
+    color:#000000;
+  }
+  .button{
+    background-color: white;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 19px;
+    margin: 7px 2px;
+    cursor: pointer;
+  }
+.contentButton{
+    background-color: grey;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 15px 32px;
+    font-size: 16px;
+    margin: 7px 2px;
+    cursor: pointer;
+  }
+
+  div.contentStyle {
+    width:80%;
+    height: 100%;
+    margin: auto;
+    padding: 15px;
+    float:right;
+  }
+  </style>
+<body>
+
+
+
+
+  <div class="mainHeading">
+    <h1 style="margin-top:0"><img src="../img/flink-logo.png" width="100" height="100" alt="Flink Logo" align="middle"/>Fault-Tolerance for Distributed Iterative Dataflow in Action
+	    
+    </h1>
+  </div>
+     <div style="height: calc(100% - 120px)">
+      <div id="mainCanvas" class="canvas boxed" style="height: 100%">
+        <div class="menuStyle" id="menu">
+          <!--<img src="img/checkpoint.png" width="35" height="35" alt="checkpoint Logo" align="left"/>-->
+           <button class="button" onclick="location.href='../html/UnblockingCheckpointing.html'">Unblocking Checkpointing</button>
+           
+          <button class="button" onclick="location.href='../html/ConfinedRecovery.html'">Confined Recovery</button>
+          <button class="button" onclick="location.href='../html/ReplicaRecovery.html'">Replica Recovery</button>
+        </div>
+        <div class="contentStyle" id="contentInformation">
+       
+
+
+
+        <div id="replicaContent">
+           <div><h2 style=" display: inline;">Replica Recovery Demostration</h2><button class="btn btn-default" onclick="replicaReset()" style="float: right; background-color: #58FA82;">Reset</button></div>
+            <br/>
+            <div>
+              <button class="btn btn-default" style="float: left; background-color: #D7BCDA;" onclick="runKMeans()">K-Means</button>
+              <!--<button class="btn btn-default" onclick="replicaSingleFailure()" style="float: right; background-color: #F6CECE;">Single Failure</button>
+       
+              <button class="btn btn-default" onclick="replicaMultipleFailure()" style="float: right; background-color: #F6CECE;">Multiple Failure</button>
+            
+              <button class="btn btn-default" onclick="replicaCascadingFailure()" style="float: right; background-color: #F6CECE;">Cascading Failure</button>-->
+              <br/><br/>
+              <form  onsubmit="confinedSingleFailure()">
+              <select name="failure">
+  <option value="FnoFailure" selected>No Failure</option>
+  <option value="FsingleFailure">Single Failure</option>
+  <option value="FmultipleFailure">Multiple Failure</option>
+  <option value="FcascadingFailure">Cascading Failure</option>
+</select>&nbsp;&nbsp;&nbsp;
+
+  Number of iterations: <input type="text" name="NumberIterations" size="3">&nbsp;&nbsp;&nbsp;
+  Failed iteration: <input type="text" name="FailedIteration" size="3">&nbsp;&nbsp;&nbsp;
+  <input type="submit" value="Run Demo" class="btn btn-default" style="background-color: #58FA82; float: right;">
+</form>
+              
+            </div>
+            <div style="width: 50%; float:left"><h3 style="float: left;">Job Status</h3><br/><br/><br/>
+            
+            <div id="replicaLog" style="float: left; border: solid 1px black; width: 98.5%; height: 315px; text-align: left; overflow-y: scroll; overflow-x: scroll">
+               <h2>******Replica Recovery information*********</h2>
+            </div></div>
+            <div style="width: 50%; float:right;"><h3 style="float: left;">Cluster Status</h3><br/><br/><br/>
+            
+            <div id="replicaClusterGraph" style="float: right; border: solid 1px black;  width: 98.5%; height: 315px; text-align: center">
+              <h2>******Cluster Graph*********</h2>
+
+
+            </div></div>
+          </div>
+        
+
+        </div>
+
+
+
+    </div> </div>
+    
+
+
+
+
+    <script type="text/javascript">
+
+     updateJobmanReplica();
+  updateTaskmanReplica();
+
+  updateLogReplica(); 
+
+var jobmanString;
+var taskmanString;
+
+var myGOJS = go.GraphObject.make;
+
+var myDiagram2 = null;
+
+
+
+function updateJobmanReplica() {
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      //alert(this.responseText); //shellScripts.php&f=pageRank
+      jobmanString = this.responseText;
+      //Cluster Graph -GOJS---------------------------------------------------------------------------------------------
+      myDiagram2 =
+        myGOJS(go.Diagram, "replicaClusterGraph", {
+          initialContentAlignment: go.Spot.Center, // center Diagram contents
+          "undoManager.isEnabled": true, // enable Ctrl-Z to undo and Ctrl-Y to redo
+          layout: myGOJS(go.TreeLayout, // specify a Diagram.layout that arranges trees
+            {
+              angle: 90,
+              layerSpacing: 35
+            })
+        });
+
+      myDiagram2.nodeTemplate =
+        myGOJS(go.Node, "Auto",
+          //{ background: "#58FA82" },
+          myGOJS(go.Shape, "Rectangle",
+            new go.Binding("fill", "color")),
+          myGOJS(go.Panel, "Table", {
+              defaultAlignment: go.Spot.Left,
+              margin: 15
+            },
+            myGOJS(go.RowColumnDefinition),
+            myGOJS(go.TextBlock, {
+                row: 0,
+                column: 0,
+                columnSpan: 2,
+                alignment: go.Spot.Center
+              }, {
+                margin: 8,
+                stroke: "black",
+                font: "bold 8pt sans-serif"
+              },
+              new go.Binding("text", "type")),
+            myGOJS(go.TextBlock, "Process: ", {
+              row: 1,
+              column: 0
+            }),
+            myGOJS(go.TextBlock, {
+                row: 1,
+                column: 1
+              },
+              new go.Binding("text", "id"))
+          ));
+
+      // define a Link template that routes orthogonally, with no arrowhead
+      myDiagram2.linkTemplate =
+        myGOJS(go.Link, {
+            routing: go.Link.Orthogonal,
+            corner: 5
+          },
+          myGOJS(go.Shape, {
+            strokeWidth: 3,
+            stroke: "#555"
+          })); // the link shape
+
+      var model = myGOJS(go.TreeModel);
+
+
+      var res = jobmanString.split(" ");
+
+      model.nodeDataArray = [{
+        key: "1",
+        type: "Job Manager",
+        id: res[0],
+        color: "#58FA82"
+      }];
+      myDiagram2.model = model;
+
+
+    }
+  };
+  xhttp.open("GET", "http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/php/jobmanager.php", true);
+
+  xhttp.send();
+
+  //alert('Page Rank algorithm is running');
+}
+
+function updateTaskmanReplica() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      //alert(this.responseText); //shellScripts.php&f=pageRank
+      taskmanString = this.responseText;
+
+      var node = myDiagram2.findNodeForKey("1");
+      var model = myDiagram2.model;
+      var res = taskmanString.split(" ");
+      var count = 2;
+
+      // all model changes should happen in a transaction
+      model.startTransaction("add taskmanagers");
+      debugger;
+      var i;
+      for (i = 0; i < res.length; i += 2) {
+        var newnode = {
+          key: count,
+          type: "Task Manager",
+          id: res[i],
+          color: "#58FA82"
+        };
+        //var newlink = { from: selnode.data.key, to: newnode.key };
+        model.addNodeData(newnode);
+        model.setParentKeyForNodeData(newnode, "1");
+        count++;
+      }
+      model.commitTransaction("add taskmanagers");
+
+      //alert("taskmanagers added");
+    }
+  };
+  xhttp.open("GET", "http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/php/taskmanager.php", true);
+
+  xhttp.send();
+
+  //alert('Page Rank algorithm is running');
+}
+
+function updateLogReplica(){
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      //alert(this.responseText); //shellScripts.php&f=pageRank
+      document.getElementById("replicaLog").innerHTML = this.responseText;
+
+      
+
+      alert("log updated");
+    }
+  };
+  xhttp.open("GET", "http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/php/readLog2.php", true);
+
+  xhttp.send();
+
+}
+
+
+
+
+  
+
+
+
+
+var xhttpFail;
+var failureSelected = false;
+
+
+
+
+//REPLICA FUNCTIONS ---------------------------------------------------------------------------------------------------
+
+function replicaReset() {
+  var model = myDiagram2.model;
+  model.startTransaction("reset");
+
+
+  model.nodeDataArray = [{
+      key: "1",
+      type: "Job Manager",
+      id: "12345",
+      color: "#58FA82"
+    },
+    {
+      key: "2",
+      parent: "1",
+      type: "Task Manager",
+      id: "12345",
+      color: "#58FA82"
+    },
+    {
+      key: "3",
+      parent: "1",
+      type: "Task Manager",
+      id: "12345",
+      color: "#58FA82"
+    },
+    {
+      key: "4",
+      parent: "1",
+      type: "Task Manager",
+      id: "12345",
+      color: "#58FA82"
+    },
+    {
+      key: "5",
+      parent: "1",
+      type: "Task Manager",
+      id: "12345",
+      color: "#58FA82"
+    }
+  ];
+  model.commitTransaction("reset");
+
+}
+
+function runKMeans(){
+  replicaSingleFailure();
+}
+
+function replicaSingleFailure() {
+  var node = myDiagram2.findNodeForKey("2");
+  var model = myDiagram2.model;
+
+  // all model changes should happen in a transaction
+  model.startTransaction("change color");
+
+  // This is the safe way to change model data
+  // GoJS will be notified that the data has changed
+  // and can update the node in the Diagram
+  // and record the change in the UndoManager
+  model.setDataProperty(node.data, "color", "#F78181");
+
+  model.commitTransaction("change color");
+
+  // outputs "red" - the model has changed!
+  console.log(node.data.color);
+}
+
+function replicaMultipleFailure() {
+  var node = myDiagram2.findNodeForKey("2");
+  var node2 = myDiagram2.findNodeForKey("3");
+  var model = myDiagram2.model;
+
+  // all model changes should happen in a transaction
+  model.startTransaction("change color");
+
+  // This is the safe way to change model data
+  // GoJS will be notified that the data has changed
+  // and can update the node in the Diagram
+  // and record the change in the UndoManager
+  model.setDataProperty(node.data, "color", "#F78181");
+  model.setDataProperty(node2.data, "color", "#F78181");
+
+  model.commitTransaction("change color");
+
+  // outputs "red" - the model has changed!
+  console.log(node.data.color);
+}
+
+function replicaCascadingFailure() {
+  var node = myDiagram2.findNodeForKey("2");
+  var node2 = myDiagram2.findNodeForKey("3");
+  var model = myDiagram2.model;
+
+  // all model changes should happen in a transaction
+  model.startTransaction("change color");
+
+  // This is the safe way to change model data
+  // GoJS will be notified that the data has changed
+  // and can update the node in the Diagram
+  // and record the change in the UndoManager
+  model.setDataProperty(node.data, "color", "#F78181");
+  model.setDataProperty(node2.data, "color", "#F78181");
+
+  model.commitTransaction("change color");
+
+  // outputs "red" - the model has changed!
+  console.log(node.data.color);
+}
+
+    </script>
+</body>
+</html>
+

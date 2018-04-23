@@ -1,0 +1,28 @@
+rm -Rf /tmp/hadoop-rudi/
+
+bin/hadoop namenode -format
+
+sbin/start-dfs.sh
+
+bin/hdfs dfs -copyFromLocal /home/rudi/Fault-tolerance-Demo/outputs/11 hdfs://localhost:9000/
+
+bin/hdfs dfs -mkdir hdfs://localhost:9000/checkpoint/
+
+
+
+php -S localhost:8100
+
+
+
+
+http://localhost:50070/
+
+
+
+
+Page Rank
+
+bin/flink run -v -c eu.stratosphere.procrustes.experiments.recovery.PageRank ../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 100 10 5
+
+Execution Plan Page Rank
+bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.PageRank ../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 100 10 5 > ii

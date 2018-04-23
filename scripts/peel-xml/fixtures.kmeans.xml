@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Custom Systems -->
+    <import resource="fixtures.systems.xml"/>
+
+    <!--************************************************************************
+    * Data Sets
+    *************************************************************************-->
+
+  <bean id="dataset.clusters.points" parent="dataset.static.hdfs-2">
+		<constructor-arg name="src" value="/data/users/chenxu/k-means-clustering/points"/>
+		<constructor-arg name="dst" value="${system.hadoop-2.path.input}/points"/>
+	</bean>
+
+ <bean id="dataset.clusters.initialclusters" parent="dataset.static.hdfs-2">
+		<constructor-arg name="src" value="/data/users/chenxu/k-means-clustering/clusters"/>
+		<constructor-arg name="dst" value="${system.hadoop-2.path.input}/clusters"/>
+	</bean>
+
+    <!--************************************************************************
+    * Experiments
+    *************************************************************************-->
+
+    <!-- k-means output -->
+    <bean id="experiment.output.hdfs.kmeans" parent="experiment.output.hdfs-2">
+        <constructor-arg name="path" value="${system.hadoop-2.path.output}/kmeans"/>
+    </bean>
+
+    <!-- k-means experiment (flink) -->
+    <bean id="experiment.flink.kmeans.test" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.KMeans ${app.path.jobs}/procrustes-flink-1.0-SNAPSHOT.jar ${system.hadoop-2.path.input}/points ${system.hadoop-2.path.input}/clusters ${system.hadoop-2.path.output}/kmeans 2 0</value>
+        </constructor-arg>
+        <constructor-arg name="inputs">
+         <set value-type="eu.stratosphere.peel.core.beans.data.GeneratedDataSet">
+                <ref bean="dataset.clusters.points"/>
+                <ref bean="dataset.clusters.initialclusters"/>
+         </set>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.kmeans"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="experiment.flink.kmeans.broadcast" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.KMeans ${app.path.jobs}/procrustes-flink-1.0-SNAPSHOT.jar ${system.hadoop-2.path.input}/points ${system.hadoop-2.path.input}/clusters ${system.hadoop-2.path.output}/kmeans 10 0</value>
+        </constructor-arg>
+        <constructor-arg name="inputs">
+         <set value-type="eu.stratosphere.peel.core.beans.data.GeneratedDataSet">
+                <ref bean="dataset.clusters.points"/>
+                <ref bean="dataset.clusters.initialclusters"/>
+         </set>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.kmeans"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="experiment.flink.kmeans.broadcast.checkpoint" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.KMeans ${app.path.jobs}/procrustes-flink-1.0-SNAPSHOT.jar ${system.hadoop-2.path.input}/points ${system.hadoop-2.path.input}/clusters ${system.hadoop-2.path.output}/kmeans 10 1</value>
+        </constructor-arg>
+        <constructor-arg name="inputs">
+         <set value-type="eu.stratosphere.peel.core.beans.data.GeneratedDataSet">
+                <ref bean="dataset.clusters.points"/>
+                <ref bean="dataset.clusters.initialclusters"/>
+         </set>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.kmeans"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="experiment.flink.kmeansTuple.broadcast" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.KMeansTuple ${app.path.jobs}/procrustes-flink-1.0-SNAPSHOT.jar ${system.hadoop-2.path.input}/points ${system.hadoop-2.path.input}/clusters ${system.hadoop-2.path.output}/kmeans 10 0</value>
+        </constructor-arg>
+        <constructor-arg name="inputs">
+         <set value-type="eu.stratosphere.peel.core.beans.data.GeneratedDataSet">
+                <ref bean="dataset.clusters.points"/>
+                <ref bean="dataset.clusters.initialclusters"/>
+         </set>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.kmeans"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="experiment.flink.kmeansTuple.broadcast.checkpoint" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.KMeansTuple ${app.path.jobs}/procrustes-flink-1.0-SNAPSHOT.jar ${system.hadoop-2.path.input}/points ${system.hadoop-2.path.input}/clusters ${system.hadoop-2.path.output}/kmeans 10 1</value>
+        </constructor-arg>
+        <constructor-arg name="inputs">
+         <set value-type="eu.stratosphere.peel.core.beans.data.GeneratedDataSet">
+                <ref bean="dataset.clusters.points"/>
+                <ref bean="dataset.clusters.initialclusters"/>
+         </set>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.kmeans"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="experiment.flink.kmeans.withoutBroadcast" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.KMeansWithoutBroadcast ${app.path.jobs}/procrustes-flink-1.0-SNAPSHOT.jar ${system.hadoop-2.path.input}/points ${system.hadoop-2.path.input}/clusters ${system.hadoop-2.path.output}/kmeans 10 0</value>
+        </constructor-arg>
+        <constructor-arg name="inputs">
+         <set value-type="eu.stratosphere.peel.core.beans.data.GeneratedDataSet">
+                <ref bean="dataset.clusters.points"/>
+                <ref bean="dataset.clusters.initialclusters"/>
+         </set>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.kmeans"/>
+        </constructor-arg>
+    </bean>
+
+        <bean id="experiment.flink.kmeans.withoutBroadcast.crossHint" parent="experiment.flink-0.9-SNAPSHOT-mholzemer" abstract="true">
+        <constructor-arg name="command">
+            <value>-v -c eu.stratosphere.procrustes.experiments.recovery.KMeansWithoutBroadcastCrossHint ${app.path.jobs}/procrustes-flink-1.0-SNAPSHOT.jar ${system.hadoop-2.path.input}/points ${system.hadoop-2.path.input}/clusters ${system.hadoop-2.path.output}/kmeans 10 0</value>
+        </constructor-arg>
+        <constructor-arg name="inputs">
+         <set value-type="eu.stratosphere.peel.core.beans.data.GeneratedDataSet">
+                <ref bean="dataset.clusters.points"/>
+                <ref bean="dataset.clusters.initialclusters"/>
+         </set>
+        </constructor-arg>
+        <constructor-arg name="output">
+            <ref bean="experiment.output.hdfs.kmeans"/>
+        </constructor-arg>
+    </bean>
+
+    <!--************************************************************************
+    * Fixtures
+    *************************************************************************-->
+
+    <!-- fixtures for local development and testing -->
+    <bean id="kmeans.broadcast" class="eu.stratosphere.peel.core.beans.experiment.ExperimentSuite">
+        <constructor-arg name="experiments">
+            <list>
+                <bean parent="experiment.flink.kmeans.test">
+                    <constructor-arg name="name" value="kmeans/test/"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.kmeans.broadcast">
+                    <constructor-arg name="name" value="kmeans/broadcast/"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.kmeans.broadcast.checkpoint">
+                    <constructor-arg name="name" value="kmeans/broadcast-checkpoint/"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.kmeansTuple.broadcast">
+                    <constructor-arg name="name" value="kmeans/Tuple-broadcast/"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.kmeansTuple.broadcast.checkpoint">
+                    <constructor-arg name="name" value="kmeans/Tuple-broadcast-checkpoint/"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.kmeans.withoutBroadcast">
+                    <constructor-arg name="name" value="kmeans/withoutBroadcast/"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+		<bean parent="experiment.flink.kmeans.withoutBroadcast.crossHint">
+                    <constructor-arg name="name" value="kmeans/withoutBroadcast-crossHint/"/>
+                    <constructor-arg name="config">
+                        <value/>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>

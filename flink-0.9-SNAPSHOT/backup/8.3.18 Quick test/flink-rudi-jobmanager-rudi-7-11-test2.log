@@ -1,0 +1,138 @@
+10:51:45,930 WARN  org.apache.hadoop.util.NativeCodeLoader                       - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+10:51:46,505 INFO  org.apache.flink.runtime.jobmanager.JobManager                - --------------------------------------------------------------------------------
+10:51:46,505 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  Starting JobManager (Version: 0.9-SNAPSHOT, Rev:bd69c03, Date:05.12.2017 @ 18:47:02 CET)
+10:51:46,505 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  Current user: rudi
+10:51:46,505 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  JVM: Java HotSpot(TM) 64-Bit Server VM - Oracle Corporation - 1.8/25.151-b12
+10:51:46,505 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  Maximum heap size: 144 MiBytes
+10:51:46,505 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  JAVA_HOME: /usr/lib/jvm/java-7-oracle
+10:51:46,505 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  JVM Options:
+10:51:46,505 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     -Xms150m
+10:51:46,506 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     -Xmx150m
+10:51:46,506 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     -Dlog.file=/home/rudi/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/bin/../log/flink-rudi-jobmanager-rudi-7-11.log
+10:51:46,506 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     -Dlog4j.configuration=file:/home/rudi/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/bin/../conf/log4j.properties
+10:51:46,506 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     -Dlogback.configurationFile=file:/home/rudi/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/bin/../conf/logback.xml
+10:51:46,506 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  Program Arguments:
+10:51:46,506 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     --executionMode
+10:51:46,506 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     cluster
+10:51:46,506 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     --configDir
+10:51:46,506 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     /home/rudi/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/bin/../conf
+10:51:46,506 INFO  org.apache.flink.runtime.jobmanager.JobManager                - --------------------------------------------------------------------------------
+10:51:47,046 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Loading configuration from /home/rudi/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/bin/../conf
+10:51:47,106 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Security is not enabled. Starting non-authenticated JobManager.
+10:51:47,107 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Starting JobManager
+10:51:47,109 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Starting JobManager actor system at localhost:7291
+10:51:48,036 INFO  akka.event.slf4j.Slf4jLogger                                  - Slf4jLogger started
+10:51:48,354 INFO  Remoting                                                      - Starting remoting
+10:51:49,311 INFO  Remoting                                                      - Remoting started; listening on addresses :[akka.tcp://flink@127.0.0.1:7291]
+10:51:49,316 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Starting JobManager actor
+10:51:49,423 INFO  org.apache.flink.runtime.blob.BlobServer                      - Created BLOB server storage directory /tmp/blobStore-a0e6e04a-63a5-433c-b9b6-e6bbcc22954c
+10:51:49,432 INFO  org.apache.flink.runtime.blob.BlobServer                      - Started BLOB server at 0.0.0.0:43898 - max concurrent requests: 50 - max backlog: 1000
+10:51:49,489 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Starting JobManger web frontend
+10:51:49,495 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Starting JobManager at akka://flink/user/jobmanager.
+10:51:49,525 INFO  org.apache.flink.runtime.jobmanager.web.WebInfoServer         - Setting up web info server, using web-root directory jar:file:/home/rudi/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/lib/flink-dist-0.9-SNAPSHOT.jar!/web-docs-infoserver.
+10:51:49,657 INFO  org.eclipse.jetty.util.log                                    - jetty-0.9-SNAPSHOT
+10:51:49,729 INFO  org.eclipse.jetty.util.log                                    - Started SelectChannelConnector@0.0.0.0:6004
+10:51:49,730 INFO  org.apache.flink.runtime.jobmanager.web.WebInfoServer         - Started web info server for JobManager on 0.0.0.0:6004
+10:51:53,274 INFO  org.apache.flink.runtime.instance.InstanceManager             - Registered TaskManager at localhost (akka.tcp://flink@127.0.0.1:33581/user/taskmanager) as c8d8fbfa079c43785da0bb7646a18113. Current number of registered hosts is 1.
+10:51:53,386 INFO  org.apache.flink.runtime.instance.InstanceManager             - Registered TaskManager at localhost (akka.tcp://flink@127.0.0.1:43535/user/taskmanager) as 4bac9610cde0317fbc98dda5ee65e2a6. Current number of registered hosts is 2.
+10:51:53,415 INFO  org.apache.flink.runtime.instance.InstanceManager             - Registered TaskManager at localhost (akka.tcp://flink@127.0.0.1:42376/user/taskmanager) as adbdeb8309e965948a1117a0481ae48a. Current number of registered hosts is 3.
+10:51:53,429 INFO  org.apache.flink.runtime.instance.InstanceManager             - Registered TaskManager at localhost (akka.tcp://flink@127.0.0.1:36374/user/taskmanager) as f0fe5a4e74d5aae1d5c869e3163605a6. Current number of registered hosts is 4.
+10:52:14,832 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Received job 083ff237f882efc4bb60bf073e7ae17c (KMeans Example).
+10:52:15,601 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Scheduling job KMeans Example.
+10:52:15,623 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN DataSource (at getPointDataSet(KMeansPureTuple.java:355) (org.apache.flink.api.java.io.CsvInputFormat)) -> Map (Map at getPointDataSet(KMeansPureTuple.java:355)) (1/4) (attempt #0) to localhost
+10:52:15,637 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN DataSource (at getPointDataSet(KMeansPureTuple.java:355) (org.apache.flink.api.java.io.CsvInputFormat)) -> Map (Map at getPointDataSet(KMeansPureTuple.java:355)) (2/4) (attempt #0) to localhost
+10:52:15,638 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN DataSource (at getPointDataSet(KMeansPureTuple.java:355) (org.apache.flink.api.java.io.CsvInputFormat)) -> Map (Map at getPointDataSet(KMeansPureTuple.java:355)) (3/4) (attempt #0) to localhost
+10:52:15,639 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN DataSource (at getPointDataSet(KMeansPureTuple.java:355) (org.apache.flink.api.java.io.CsvInputFormat)) -> Map (Map at getPointDataSet(KMeansPureTuple.java:355)) (4/4) (attempt #0) to localhost
+10:52:15,640 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying DataSource (at getCentroidDataSet(KMeansPureTuple.java:363) (org.apache.flink.api.java.io.CsvInputFormat)) (1/4) (attempt #0) to localhost
+10:52:15,640 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying DataSource (at getCentroidDataSet(KMeansPureTuple.java:363) (org.apache.flink.api.java.io.CsvInputFormat)) (2/4) (attempt #0) to localhost
+10:52:15,641 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying DataSource (at getCentroidDataSet(KMeansPureTuple.java:363) (org.apache.flink.api.java.io.CsvInputFormat)) (3/4) (attempt #0) to localhost
+10:52:15,642 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying DataSource (at getCentroidDataSet(KMeansPureTuple.java:363) (org.apache.flink.api.java.io.CsvInputFormat)) (4/4) (attempt #0) to localhost
+10:52:15,643 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Status of job 083ff237f882efc4bb60bf073e7ae17c (KMeans Example) changed to RUNNING .
+10:52:24,709 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:52:24,720 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:52:24,743 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:52:24,749 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:52:24,765 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:52:24,773 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:52:24,800 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:52:24,862 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:52:28,481 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying PartialSolution (BulkIteration (Bulk Iteration)) (4/4) (attempt #0) to localhost
+10:52:28,496 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying PartialSolution (BulkIteration (Bulk Iteration)) (3/4) (attempt #0) to localhost
+10:52:28,544 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying PartialSolution (BulkIteration (Bulk Iteration)) (1/4) (attempt #0) to localhost
+10:52:28,707 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying PartialSolution (BulkIteration (Bulk Iteration)) (2/4) (attempt #0) to localhost
+10:52:29,185 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (2/4) (attempt #0) to localhost
+10:52:29,193 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (3/4) (attempt #0) to localhost
+10:52:29,199 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (1/4) (attempt #0) to localhost
+10:52:29,193 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (4/4) (attempt #0) to localhost
+10:52:31,565 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:129)) (2/4) (attempt #0) to localhost
+10:52:31,565 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:129)) (4/4) (attempt #0) to localhost
+10:52:31,565 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:129)) (1/4) (attempt #0) to localhost
+10:52:31,570 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:129)) (3/4) (attempt #0) to localhost
+10:52:32,243 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (4/4) (attempt #0) to localhost
+10:52:32,243 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (2/4) (attempt #0) to localhost
+10:52:32,243 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (1/4) (attempt #0) to localhost
+10:52:32,243 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (3/4) (attempt #0) to localhost
+10:52:32,450 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN Reduce (Reduce at main(KMeansPureTuple.java:108)) -> Map (Map at main(KMeansPureTuple.java:108)) (4/4) (attempt #0) to localhost
+10:52:32,698 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN Reduce (Reduce at main(KMeansPureTuple.java:108)) -> Map (Map at main(KMeansPureTuple.java:108)) (1/4) (attempt #0) to localhost
+10:52:32,869 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN Reduce (Reduce at main(KMeansPureTuple.java:108)) -> Map (Map at main(KMeansPureTuple.java:108)) (2/4) (attempt #0) to localhost
+10:52:32,905 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN Reduce (Reduce at main(KMeansPureTuple.java:108)) -> Map (Map at main(KMeansPureTuple.java:108)) (3/4) (attempt #0) to localhost
+10:52:36,904 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - finishing iteration [1]
+10:52:36,937 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - signaling that all workers are done in iteration [1]
+10:52:40,155 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - finishing iteration [2]
+10:52:40,155 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - signaling that all workers are done in iteration [2]
+10:52:42,815 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - finishing iteration [3]
+10:52:42,816 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - signaling that all workers are done in iteration [3]
+10:52:45,070 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - finishing iteration [4]
+10:52:45,070 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - signaling that all workers are done in iteration [4]
+10:52:47,187 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - finishing iteration [5]
+10:52:47,187 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - signaling that all workers are done in iteration [5]
+10:52:49,350 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - finishing iteration [6]
+10:52:49,350 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - signaling that all workers are done in iteration [6]
+10:52:51,571 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - finishing iteration [7]
+10:52:51,571 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - signaling that all workers are done in iteration [7]
+10:52:53,756 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - finishing iteration [8]
+10:52:53,756 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - signaling that all workers are done in iteration [8]
+10:52:55,325 WARN  akka.remote.ReliableDeliverySupervisor                        - Association with remote system [akka.tcp://flink@127.0.0.1:43535] has failed, address is now gated for [5000] ms. Reason is: [Disassociated].
+10:53:09,516 WARN  Remoting                                                      - Tried to associate with unreachable remote address [akka.tcp://flink@127.0.0.1:43535]. Address is now gated for 5000 ms, all messages to this address will be delivered to dead letters. Reason: Connection refused: /127.0.0.1:43535
+10:53:09,540 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Task manager akka.tcp://flink@127.0.0.1:43535/user/taskmanager terminated.
+10:53:09,646 INFO  org.apache.flink.runtime.instance.InstanceManager             - Unregistered task manager akka.tcp://flink@127.0.0.1:43535. Number of registered task managers 3. Number of available slots 6.
+10:53:09,648 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Status of job 083ff237f882efc4bb60bf073e7ae17c (KMeans Example) changed to FAILING The slot in which the task was scheduled has been killed (probably loss of TaskManager)..
+10:53:16,895 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Status of job 083ff237f882efc4bb60bf073e7ae17c (KMeans Example) changed to RESTARTING .
+10:53:16,931 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Status of job 083ff237f882efc4bb60bf073e7ae17c (KMeans Example) changed to CREATED .
+10:53:16,932 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN DataSource (at getPointDataSet(KMeansPureTuple.java:355) (org.apache.flink.api.java.io.CsvInputFormat)) -> Map (Map at getPointDataSet(KMeansPureTuple.java:355)) (1/3) (attempt #0) to localhost
+10:53:16,934 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Status of job 083ff237f882efc4bb60bf073e7ae17c (KMeans Example) changed to RUNNING .
+10:53:16,938 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN DataSource (at getPointDataSet(KMeansPureTuple.java:355) (org.apache.flink.api.java.io.CsvInputFormat)) -> Map (Map at getPointDataSet(KMeansPureTuple.java:355)) (2/3) (attempt #0) to localhost
+10:53:16,944 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN DataSource (at getPointDataSet(KMeansPureTuple.java:355) (org.apache.flink.api.java.io.CsvInputFormat)) -> Map (Map at getPointDataSet(KMeansPureTuple.java:355)) (3/3) (attempt #0) to localhost
+10:53:16,949 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying DataSource (at getCentroidDataSet(KMeansPureTuple.java:363) (org.apache.flink.api.java.io.CsvInputFormat)) (1/3) (attempt #0) to localhost
+10:53:16,950 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying DataSource (at getCentroidDataSet(KMeansPureTuple.java:363) (org.apache.flink.api.java.io.CsvInputFormat)) (2/3) (attempt #0) to localhost
+10:53:16,950 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying DataSource (at getCentroidDataSet(KMeansPureTuple.java:363) (org.apache.flink.api.java.io.CsvInputFormat)) (3/3) (attempt #0) to localhost
+10:53:17,009 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:53:17,017 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:53:17,018 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:53:17,018 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:53:17,023 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:53:17,036 INFO  org.apache.flink.api.common.io.LocatableInputSplitAssigner    - Assigning remote split to host localhost
+10:53:17,108 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying PartialSolution (BulkIteration (Bulk Iteration)) (1/3) (attempt #0) to localhost
+10:53:17,129 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying PartialSolution (BulkIteration (Bulk Iteration)) (2/3) (attempt #0) to localhost
+10:53:17,728 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying PartialSolution (BulkIteration (Bulk Iteration)) (3/3) (attempt #0) to localhost
+10:53:17,880 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (1/3) (attempt #0) to localhost
+10:53:17,880 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (3/3) (attempt #0) to localhost
+10:53:17,880 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (2/3) (attempt #0) to localhost
+10:53:20,317 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:129)) (2/3) (attempt #0) to localhost
+10:53:20,317 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:129)) (1/3) (attempt #0) to localhost
+10:53:20,317 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:129)) (3/3) (attempt #0) to localhost
+10:53:20,427 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (1/3) (attempt #0) to localhost
+10:53:20,427 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (2/3) (attempt #0) to localhost
+10:53:20,428 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Map (Map at main(KMeansPureTuple.java:108)) (3/3) (attempt #0) to localhost
+10:53:20,539 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN Reduce (Reduce at main(KMeansPureTuple.java:108)) -> Map (Map at main(KMeansPureTuple.java:108)) (3/3) (attempt #0) to localhost
+10:53:20,570 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN Reduce (Reduce at main(KMeansPureTuple.java:108)) -> Map (Map at main(KMeansPureTuple.java:108)) (2/3) (attempt #0) to localhost
+10:53:20,582 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying CHAIN Reduce (Reduce at main(KMeansPureTuple.java:108)) -> Map (Map at main(KMeansPureTuple.java:108)) (1/3) (attempt #0) to localhost
+10:53:22,991 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - finishing iteration [9]
+10:53:22,992 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - signaling that all workers are done in iteration [9]
+10:53:25,159 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - finishing iteration [10]
+10:53:25,159 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - maximum number of iterations [10] reached, terminating...
+10:53:25,159 INFO  org.apache.flink.runtime.jobmanager.iterations.IterationManager  - signaling that all workers are to terminate in iteration [10]
+10:53:25,243 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying DataSink (CsvOutputFormat (path: hdfs://localhost:9000/outputKMeans6, delimiter:  )) (3/3) (attempt #0) to localhost
+10:53:25,276 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying DataSink (CsvOutputFormat (path: hdfs://localhost:9000/outputKMeans6, delimiter:  )) (1/3) (attempt #0) to localhost
+10:53:25,469 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying DataSink (CsvOutputFormat (path: hdfs://localhost:9000/outputKMeans6, delimiter:  )) (2/3) (attempt #0) to localhost
+10:53:29,467 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Status of job 083ff237f882efc4bb60bf073e7ae17c (KMeans Example) changed to FINISHED .

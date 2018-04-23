@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Operator Stats Fixtures 
+    <import resource="fixtures.operatorstats.processing.xml"/>
+
+    Count Distinct Fixtures 
+    <import resource="fixtures.operatorstats.countD.xml"/>
+
+    Heavy Hitter Fixtures 
+    <import resource="fixtures.operatorstats.hitters.xml"/>
+    
+    -->
+ <import resource="fixtures.kmeans.xml"/>
+
+    <import resource="fixtures.kmeans.recovery.xml"/>
+    
+    <import resource="fixtures.concomp.recovery.xml"/>
+    
+    <import resource="fixtures.labelprop.recovery.xml"/>
+
+ <import resource="fixtures.concomp.recovery-demo.xml"/>
+
+<import resource="fixtures.concomp.recovery-blocking.xml"/>
+
+<import resource="fixtures.labelprop.recovery-blocking.xml"/>
+
+<import resource="fixtures.recovery-blocking.xml"/>
+
+<import resource="fixtures.recovery-unblocking.xml"/>
+
+<import resource="fixtures.systems.xml"/>
+
+</beans>
