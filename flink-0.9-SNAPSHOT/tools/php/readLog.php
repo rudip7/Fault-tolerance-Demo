@@ -25,7 +25,6 @@
     	echo "</table>";
     	fclose($myfile);
 	}
-	#echo fread($myfile,filesize("/home/rudi/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/flink-rudi-jobmanager-rudi-7-11-test.log"));
-	
+
 
 ?>

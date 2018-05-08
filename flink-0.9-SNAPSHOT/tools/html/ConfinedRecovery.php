@@ -21,215 +21,214 @@
 
 
 <html>
+
 <head>
-  <title>Fault Tolerance and Recovery System overview</title>
+    <title>Fault Tolerance and Recovery System overview</title>
 
 
-   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <link rel="stylesheet" type="text/css" href="../css/nephelefrontend.css" />
-  <link rel="stylesheet" type="text/css" href="../css/pactgraphs.css" />
-  <link rel="stylesheet" type="text/css" href="../css/graph.css" />
-  <link rel="stylesheet" type="text/css" href="../css/overlay.css" />
-  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
-  <script type="text/javascript" src="../js/jquery-2.1.0.js"></script>
-  <script type="text/javascript" src="../js/graphCreator.js"></script>
-  <script type="text/javascript" src="../js/d3.js" charset="utf-8"></script>
-  <script type="text/javascript" src="../js/dagre-d3.js"></script>
-  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="../js/jquery.tools.min.js"></script>
-  <script type="text/javascript" src="../js/go-debug.js"></script>
-  <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
-  
-  <style>
-  div.menuStyle {
-    width:20%;
-    height: 100%;
-    margin: auto;
-    padding: 15px;
-    float:left;
-    border-right: 1px solid #262A37;
-    color:#000000;
-  }
-  .button{
-    background-color: white;
-    border: none;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 19px;
-    margin: 7px 2px;
-    cursor: pointer;
-  }
-.contentButton{
-    background-color: grey;
-    border: none;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    padding: 15px 32px;
-    font-size: 16px;
-    margin: 7px 2px;
-    cursor: pointer;
-  }
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../css/nephelefrontend.css" />
+    <link rel="stylesheet" type="text/css" href="../css/pactgraphs.css" />
+    <link rel="stylesheet" type="text/css" href="../css/graph.css" />
+    <link rel="stylesheet" type="text/css" href="../css/overlay.css" />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+    <script type="text/javascript" src="../js/jquery-2.1.0.js"></script>
+    <script type="text/javascript" src="../js/graphCreator.js"></script>
+    <script type="text/javascript" src="../js/d3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/dagre-d3.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.tools.min.js"></script>
+    <script type="text/javascript" src="../js/go-debug.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
 
-  div.contentStyle {
-    width:100%;
-    height: 100%;
-    margin: auto;
-    padding: 15px;
-    float:right;
-  }
+    <style>
+        div.menuStyle {
+            width: 20%;
+            height: 100%;
+            margin: auto;
+            padding: 15px;
+            float: left;
+            border-right: 1px solid #262A37;
+            color: #000000;
+        }
 
+        .button {
+            background-color: white;
+            border: none;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 19px;
+            margin: 7px 2px;
+            cursor: pointer;
+        }
 
+        .contentButton {
+            background-color: grey;
+            border: none;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            padding: 15px 32px;
+            font-size: 16px;
+            margin: 7px 2px;
+            cursor: pointer;
+        }
 
+        div.contentStyle {
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            padding: 15px;
+            float: right;
+        }
 
-   .sidenav {
-    height: 270px;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-}
+        .sidenav {
+            height: 270px;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
 
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 19px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 19px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
 
-.sidenav a:hover {
-    color: #f1f1f1;
-}
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
 
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
 
-  </style>
-<body>
+    <body>
 
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="javascript:goToUnblockingCheckpointing();">Unblocking Checkpointing</a>
+            <a href="javascript:goToConfinedRecovery();">Confined Recovery</a>
+            <a href="javascript:goToReplicaRecovery();">Replica Recovery</a>
+        </div>
+        <div class="mainHeading">
+            <h1 style="margin-top:0"><img src="../img/flink-logo.png" width="100" height="100" alt="Flink Logo" align="middle" />Fault-Tolerance for Distributed Iterative Dataflows in Action
+                <span style="font-size:50px; cursor:pointer; float: right; padding: 25px;" onclick="openNav()">&#9776;</span>
+            </h1>
+        </div>
+        <div style="height: calc(100% - 120px)">
+            <div id="mainCanvas" class="canvas boxed" style="height: 100%">
 
+                <div class="contentStyle" id="contentInformation">
 
-
-  <div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="javascript:goToUnblockingCheckpointing();">Unblocking Checkpointing</a>
-  <a href="javascript:goToConfinedRecovery();">Confined Recovery</a>
-  <a href="javascript:goToReplicaRecovery();">Replica Recovery</a>
-</div>
-  <div class="mainHeading">
-    <h1 style="margin-top:0"><img src="../img/flink-logo.png" width="100" height="100" alt="Flink Logo" align="middle"/>Fault-Tolerance for Distributed Iterative Dataflows in Action
-      <span style="font-size:50px; cursor:pointer; float: right; padding: 25px;" onclick="openNav()">&#9776;</span>
-    </h1>
-  </div>
-    <div style="height: calc(100% - 120px)">
-      <div id="mainCanvas" class="canvas boxed" style="height: 100%">
-        
-        <div class="contentStyle" id="contentInformation">
-
-        <div id="confinedContent">
-           <div style="font-size: 17px;"><h2 style=" display: inline; ">Confined Recovery Demonstration</h2><button class="btn btn-default" onclick="goToConfinedRecovery();" style="float: right; background-color: #58FA82;">Reset</button></div>
-           <br/>
-            <div style="font-size: 17px;">
-              <form action="http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/html/ConfinedRecovery.php" method="get">
-            <select name="algorithm" id="algorithmid" class="btn btn-default" style="float: left; background-color: #D7BCDA;"  disabled>
+                    <div id="confinedContent">
+                        <div style="font-size: 17px;">
+                            <h2 style=" display: inline; ">Confined Recovery Demonstration</h2><button class="btn btn-default" onclick="goToConfinedRecovery();" style="float: right; background-color: #58FA82;">Reset</button></div>
+                        <br/>
+                        <div style="font-size: 17px;">
+                            <form action="http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/html/ConfinedRecovery.php" method="get">
+                                <select name="algorithm" id="algorithmid" class="btn btn-default" style="float: left; background-color: #D7BCDA;" disabled>
 
               <option id="PRButton" value="pageRank" <?php if($_GET["algorithm"] == "pageRank"){ echo " selected";} ?>>PageRank</option>
                <option id="CCButton" value="connectedComponents" <?php if($_GET["algorithm"] == "connectedComponents"){ echo " selected";} ?>>Connected Components</option>
                </select><br/><br/>
-              
-            
-              
-              <select name="failure" id="failureType" class="btn btn-default"  disabled>
+
+
+
+                                <select name="failure" id="failureType" class="btn btn-default" disabled>
   <option value="FnoFailure" <?php if($_GET["failure"] == "FnoFailure"){ echo " selected";} ?>>No Failure</option>
   <option value="FsingleFailure" <?php if($_GET["failure"] == "FsingleFailure"){ echo " selected";} ?>>Single Failure</option>
   <option value="FmultipleFailure" <?php if($_GET["failure"] == "FmultipleFailure"){ echo " selected";} ?>>Multiple Failure</option>
   <option value="FcascadingFailure" <?php if($_GET["failure"] == "FcascadingFailure"){ echo " selected";} ?>>Cascading Failure</option>
-</select>&nbsp;&nbsp;&nbsp;
+</select>&nbsp;&nbsp;&nbsp; Number of iterations: <input type="text" class="btn btn-default" name="NumberIterations" size="3" <?php echo 'value="'.htmlspecialchars($_GET[ "NumberIterations"]). '"'; ?> id="nIterations" disabled>&nbsp;&nbsp;&nbsp; Checkpoint interval: <input type="text" class="btn btn-default" name="CheckpointInterval" size="3" <?php echo 'value="'.htmlspecialchars($_GET[ "CheckpointInterval"]). '"'; ?> id="nCheckpoint" disabled>&nbsp;&nbsp;&nbsp; Failed iteration: <input type="text" class="btn btn-default" name="FailedIteration" size="3" <?php echo 'value="'.htmlspecialchars($_GET[ "FailedIteration"]). '"'; ?> id="failedIteration" disabled>&nbsp;&nbsp;&nbsp;
+                                <input type="submit" value="Run Demo" class="btn btn-default" style="background-color: #58FA82; float: right;" disabled>
+                            </form>
 
-  Number of iterations: <input type="text" class="btn btn-default" name="NumberIterations" size="3" <?php echo 'value="'.htmlspecialchars($_GET["NumberIterations"]).'"'; ?> id="nIterations" disabled>&nbsp;&nbsp;&nbsp;
-  Checkpoint interval: <input type="text" class="btn btn-default" name="CheckpointInterval" size="3" <?php echo 'value="'.htmlspecialchars($_GET["CheckpointInterval"]).'"'; ?> id="nCheckpoint" disabled>&nbsp;&nbsp;&nbsp;
-  Failed iteration: <input type="text" class="btn btn-default" name="FailedIteration" size="3" <?php echo 'value="'.htmlspecialchars($_GET["FailedIteration"]).'"'; ?> id="failedIteration" disabled>&nbsp;&nbsp;&nbsp;
-  <input type="submit" value="Run Demo" class="btn btn-default" style="background-color: #58FA82; float: right;" disabled>
-</form>
 
-              
-              
+
+                        </div>
+
+                        <div style="width: 70%; float:left">
+                            <h3 style="float: left;">Job Status</h3><br/><br/><br/>
+
+                            <div id="confinedLog" style="float: left; border: solid 1px black; width: 98.5%; height: 305px; text-align: left; overflow-y: scroll; overflow-x: scroll; white-space: nowrap;">
+
+
+
+                            </div>
+                        </div>
+                        <div style="width: 30%; float:right;">
+                            <h3 style="float: left;">Cluster Status</h3><br/><br/><br/>
+                            <div id="confinedClusterGraph" style="float: right; border: solid 1px black; width: 98.5%; height: 305px; text-align: center">
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
             </div>
-            
-             <div style="width: 70%; float:left"><h3 style="float: left;">Job Status</h3><br/><br/><br/>
-            
-            <div id="confinedLog" style="float: left; border: solid 1px black; width: 98.5%; height: 305px; text-align: left; overflow-y: scroll; overflow-x: scroll; white-space: nowrap;">
-              <!--<h2>******Confined Recovery information*********</h2>-->
-
-              
-        
-            </div>
-            </div> 
-            <div style="width: 30%; float:right;"><h3 style="float: left;">Cluster Status</h3><br/><br/><br/>
-            <div id="confinedClusterGraph" style="float: right; border: solid 1px black; width: 98.5%; height: 305px; text-align: center">
-              <!--<h2>*******Cluster Graph********<br/><br/>Please start a Flink cluster and reload this page</h2>-->
-
-
-            </div></div>
-          </div>
-
         </div>
 
 
 
-    </div></div>
-  
-    
+
+        <script type="text/javascript">
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "300px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+
+            var jobmanString;
+            var taskmanString;
+
+            var myGOJS = go.GraphObject.make;
+
+            var myDiagram = null;
+
+            updateJobmanConfined();
 
 
-    <script type="text/javascript">
-
-      function openNav() {
-    document.getElementById("mySidenav").style.width = "300px";
-  }
-
-  function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-  }
-
-  var jobmanString;
-var taskmanString;
-
-var myGOJS = go.GraphObject.make;
-
-var myDiagram = null;
-
-     updateJobmanConfined();
-  
-
- updateLog();
-
- 
+            updateLog();
 
 
-// PHP EXEC ------------------------------------------------------------------------------------------------------------------
 
-<?php
+
+            // PHP EXEC ------------------------------------------------------------------------------------------------------------------
+
+            <?php
 header('Access-Control-Allow-Origin: *'); 
 
   if($_GET["algorithm"] == "pageRank"){
@@ -280,37 +279,30 @@ header('Access-Control-Allow-Origin: *');
 
 ?>
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
 
-function runDemo() {
+            function runDemo() {
 
-  var xhttp = new XMLHttpRequest();
+                var xhttp = new XMLHttpRequest();
 
-  /*xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      alert(this.responseText);
-    }
-  };*/
+                xhttp.open("GET", "http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/php/runDemo.php", true);
+                xhttp.send();
 
-  xhttp.open("GET", "http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/php/runDemo.php", true);
-  xhttp.send();
+                showResult();
 
-  showResult();
+            }
 
-}
+            async function showResult() {
+                var objDiv = document.getElementById("confinedLog");
+                while (document.getElementById("confinedLog").innerHTML.search("FINISHED") == -1) {
 
-async function showResult(){
-  var objDiv = document.getElementById("confinedLog");
-  //var pos = document.getElementById("confinedLog").innerHTML.lastIndexOf("Received job ");
-  while(document.getElementById("confinedLog").innerHTML.search("FINISHED") == -1){
-        
-        await sleep(2000);
-        updateLog();
+                    await sleep(2000);
+                    updateLog();
 
-        objDiv.scrollTop = objDiv.scrollHeight;
-        <?php
+                    objDiv.scrollTop = objDiv.scrollHeight;
+                    <?php
 
     if($_GET["failure"] == "FsingleFailure"){
       echo "searchSingleFailure();";
@@ -325,288 +317,277 @@ async function showResult(){
 
     ?>
 
-    }
-    alert("Finished running the demo");
-}
+                }
+                alert("Finished running the demo");
+            }
 
-var failure1 = false;
-var failure2 = false;
+            var failure1 = false;
+            var failure2 = false;
 
-function searchSingleFailure(){
-  if(!failure1){
-    var count = (document.getElementById("confinedLog").innerHTML.match(/taskmanager terminated/g) || []).length;
-    if(count == 1){
-      failure1 = true;
-      confinedSingleFailure();
-    }
-  }
-}
+            function searchSingleFailure() {
+                if (!failure1) {
+                    var count = (document.getElementById("confinedLog").innerHTML.match(/taskmanager terminated/g) || []).length;
+                    if (count == 1) {
+                        failure1 = true;
+                        confinedSingleFailure();
+                    }
+                }
+            }
 
-function searchMultipleFailure(){
-  if(!failure2){
-    var count = (document.getElementById("confinedLog").innerHTML.match(/taskmanager terminated/g) || []).length;
-    if(count == 2){
-      failure2 = true;
-      confinedMultipleFailure();
-    }
-  }
-}
+            function searchMultipleFailure() {
+                if (!failure2) {
+                    var count = (document.getElementById("confinedLog").innerHTML.match(/taskmanager terminated/g) || []).length;
+                    if (count == 2) {
+                        failure2 = true;
+                        confinedMultipleFailure();
+                    }
+                }
+            }
 
-function searchCascadingFailure(){
-  if(!failure1){
-    var count = (document.getElementById("confinedLog").innerHTML.match(/taskmanager terminated/g) || []).length;
-    if(count == 1){
-      failure1 = true;
-      confinedCascadingFailure();
-    }
-  } else if(!failure2){
-    var count = (document.getElementById("confinedLog").innerHTML.match(/taskmanager terminated/g) || []).length;
-    if(count == 2){
-      failure2 = true;
-      confinedCascadingFailure();
-    }
-  }
-  
-}
+            function searchCascadingFailure() {
+                if (!failure1) {
+                    var count = (document.getElementById("confinedLog").innerHTML.match(/taskmanager terminated/g) || []).length;
+                    if (count == 1) {
+                        failure1 = true;
+                        confinedCascadingFailure();
+                    }
+                } else if (!failure2) {
+                    var count = (document.getElementById("confinedLog").innerHTML.match(/taskmanager terminated/g) || []).length;
+                    if (count == 2) {
+                        failure2 = true;
+                        confinedCascadingFailure();
+                    }
+                }
 
-function stopCluster(){
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) { 
-    //window.location.href='../html/ConfinedRecovery.html';   
-  }
-  };
-  xhttp.open("GET", "http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/php/stopCluster.php", true);
+            }
 
-  xhttp.send();
-}
+            function stopCluster() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    }
+                };
+                xhttp.open("GET", "http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/php/stopCluster.php", true);
 
-
-
-function updateJobmanConfined() {
+                xhttp.send();
+            }
 
 
 
-      jobmanString = "<?php echo $_GET["clusterJM"]; ?>";
-      //alert("JM   "+jobmanString);
-      
-      if(jobmanString.length === 1){
-      	alert("Please start a Flink cluster and reload this page");
-      } else{
-      //Cluster Graph -GOJS---------------------------------------------------------------------------------------------
-     
-      myDiagram =
-        go.GraphObject.make(go.Diagram, "confinedClusterGraph", {
-          initialContentAlignment: go.Spot.Center, // center Diagram contents
-          "undoManager.isEnabled": true, // enable Ctrl-Z to undo and Ctrl-Y to redo
-          layout: go.GraphObject.make(go.TreeLayout, // specify a Diagram.layout that arranges trees
-            {
-              angle: 90,
-              layerSpacing: 35
-            })
-        });
-
-      myDiagram.nodeTemplate =
-        go.GraphObject.make(go.Node, "Auto",
-          
-          go.GraphObject.make(go.Shape, "Rectangle",
-            new go.Binding("fill", "color")),
-          go.GraphObject.make(go.Panel, "Table", {
-              defaultAlignment: go.Spot.Left,
-              margin: 15
-            },
-            go.GraphObject.make(go.RowColumnDefinition),
-            go.GraphObject.make(go.TextBlock, {
-                row: 0,
-                column: 0,
-                columnSpan: 2,
-                alignment: go.Spot.Center
-              }, {
-                margin: 8,
-                stroke: "black",
-                font: "bold 8pt sans-serif"
-              },
-              new go.Binding("text", "type")),
-            go.GraphObject.make(go.TextBlock, "Process: ", {
-              row: 1,
-              column: 0
-            }),
-            go.GraphObject.make(go.TextBlock, {
-                row: 1,
-                column: 1
-              },
-              new go.Binding("text", "id"))
-          ));
-
-      // define a Link template that routes orthogonally, with no arrowhead
-      myDiagram.linkTemplate =
-        go.GraphObject.make(go.Link, {
-            routing: go.Link.Orthogonal,
-            corner: 5
-          },
-          go.GraphObject.make(go.Shape, {
-            strokeWidth: 3,
-            stroke: "#555"
-          })); // the link shape
-
-      var model = go.GraphObject.make(go.TreeModel);
+            function updateJobmanConfined() {
 
 
-      var res = jobmanString.split(" ");
 
-      model.nodeDataArray = [{
-        key: "1",
-        type: "Job Manager",
-        id: res[0],
-        color: "#58FA82"
-      }];
-      myDiagram.model = model;
+                jobmanString = "<?php echo $_GET["
+                clusterJM "]; ?>";
 
-      updateTaskmanConfined();
-    }
+                if (jobmanString.length === 1) {
+                    alert("Please start a Flink cluster and reload this page");
+                } else {
+                    //Cluster Graph -GOJS---------------------------------------------------------------------------------------------
 
-  //alert('Page Rank algorithm is running');
-}
+                    myDiagram =
+                        go.GraphObject.make(go.Diagram, "confinedClusterGraph", {
+                            initialContentAlignment: go.Spot.Center, // center Diagram contents
+                            "undoManager.isEnabled": true, // enable Ctrl-Z to undo and Ctrl-Y to redo
+                            layout: go.GraphObject.make(go.TreeLayout, // specify a Diagram.layout that arranges trees
+                                {
+                                    angle: 90,
+                                    layerSpacing: 35
+                                })
+                        });
 
-function updateTaskmanConfined() {
-  
-      taskmanString = "<?php echo $_GET["clusterTM"]; ?>";
+                    myDiagram.nodeTemplate =
+                        go.GraphObject.make(go.Node, "Auto",
 
-      //alert("TM   "+taskmanString);
-      if(taskmanString.length === 1){
-      	alert("Please start at least 2 Taskmanagers and reload this page");
-      } else{
+                            go.GraphObject.make(go.Shape, "Rectangle",
+                                new go.Binding("fill", "color")),
+                            go.GraphObject.make(go.Panel, "Table", {
+                                    defaultAlignment: go.Spot.Left,
+                                    margin: 15
+                                },
+                                go.GraphObject.make(go.RowColumnDefinition),
+                                go.GraphObject.make(go.TextBlock, {
+                                        row: 0,
+                                        column: 0,
+                                        columnSpan: 2,
+                                        alignment: go.Spot.Center
+                                    }, {
+                                        margin: 8,
+                                        stroke: "black",
+                                        font: "bold 8pt sans-serif"
+                                    },
+                                    new go.Binding("text", "type")),
+                                go.GraphObject.make(go.TextBlock, "Process: ", {
+                                    row: 1,
+                                    column: 0
+                                }),
+                                go.GraphObject.make(go.TextBlock, {
+                                        row: 1,
+                                        column: 1
+                                    },
+                                    new go.Binding("text", "id"))
+                            ));
 
-      var node = myDiagram.findNodeForKey("1");
-      var model = myDiagram.model;
-      var res = taskmanString.split(" ");
-      var count = 2;
+                    // define a Link template that routes orthogonally, with no arrowhead
+                    myDiagram.linkTemplate =
+                        go.GraphObject.make(go.Link, {
+                                routing: go.Link.Orthogonal,
+                                corner: 5
+                            },
+                            go.GraphObject.make(go.Shape, {
+                                strokeWidth: 3,
+                                stroke: "#555"
+                            })); // the link shape
 
-      // all model changes should happen in a transaction
-      model.startTransaction("add taskmanagers");
-      //debugger;
-      var i;
-      for (i = 0; i < res.length; i += 2) {
-        var newnode = {
-          key: count,
-          type: "Task Manager",
-          id: res[i],
-          color: "#58FA82"
-        };
-        //var newlink = { from: selnode.data.key, to: newnode.key };
-        model.addNodeData(newnode);
-        model.setParentKeyForNodeData(newnode, "1");
-        count++;
-      }
-      model.commitTransaction("add taskmanagers");
-      //console.log(myDiagram);
+                    var model = go.GraphObject.make(go.TreeModel);
 
-      //alert("taskmanagers added");
-  	}
-  //alert('Page Rank algorithm is running');
-}
 
-function updateLog(){
+                    var res = jobmanString.split(" ");
 
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      var log = this.responseText;
-      document.getElementById("confinedLog").innerHTML = log;
-    }
-  };
-  xhttp.open("GET", "http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/php/readLog.php", true);
+                    model.nodeDataArray = [{
+                        key: "1",
+                        type: "Job Manager",
+                        id: res[0],
+                        color: "#58FA82"
+                    }];
+                    myDiagram.model = model;
 
-  xhttp.send();
+                    updateTaskmanConfined();
+                }
 
-}
+            }
 
-function confinedSingleFailure() {
-  //debugger;
-    //console.log(myDiagram);
-    var node = myDiagram.findNodeForKey("2");
-    var model = myDiagram.model;
+            function updateTaskmanConfined() {
 
-    // all model changes should happen in a transaction
-    model.startTransaction("change color");
+                taskmanString = "<?php echo $_GET["
+                clusterTM "]; ?>";
 
-    // This is the safe way to change model data
-    // GoJS will be notified that the data has changed
-    // and can update the node in the Diagram
-    // and record the change in the UndoManager
-    model.setDataProperty(node.data, "color", "#F78181");
+                if (taskmanString.length === 1) {
+                    alert("Please start at least 2 Taskmanagers and reload this page");
+                } else {
 
-    model.commitTransaction("change color");
+                    var node = myDiagram.findNodeForKey("1");
+                    var model = myDiagram.model;
+                    var res = taskmanString.split(" ");
+                    var count = 2;
 
-    // outputs "red" - the model has changed!
-    console.log(node.data.color);
+                    // all model changes should happen in a transaction
+                    model.startTransaction("add taskmanagers");
+                    var i;
+                    for (i = 0; i < res.length; i += 2) {
+                        var newnode = {
+                            key: count,
+                            type: "Task Manager",
+                            id: res[i],
+                            color: "#58FA82"
+                        };
+                        model.addNodeData(newnode);
+                        model.setParentKeyForNodeData(newnode, "1");
+                        count++;
+                    }
+                    model.commitTransaction("add taskmanagers");
+                }
+            }
 
-}
+            function updateLog() {
 
-function confinedMultipleFailure() {
-  
-    var node = myDiagram.findNodeForKey("2");
-    var node2 = myDiagram.findNodeForKey("3");
-    var model = myDiagram.model;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var log = this.responseText;
+                        document.getElementById("confinedLog").innerHTML = log;
+                    }
+                };
+                xhttp.open("GET", "http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/php/readLog.php", true);
 
-    // all model changes should happen in a transaction
-    model.startTransaction("change color");
+                xhttp.send();
 
-    // This is the safe way to change model data
-    // GoJS will be notified that the data has changed
-    // and can update the node in the Diagram
-    // and record the change in the UndoManager
-    model.setDataProperty(node.data, "color", "#F78181");
-    model.setDataProperty(node2.data, "color", "#F78181");
+            }
 
-    model.commitTransaction("change color");
+            function confinedSingleFailure() {
+                var node = myDiagram.findNodeForKey("2");
+                var model = myDiagram.model;
 
-    // outputs "red" - the model has changed!
-    console.log(node.data.color);
-}
+                // all model changes should happen in a transaction
+                model.startTransaction("change color");
 
-function confinedCascadingFailure() {
-    var node;
-    if(failure2){
-       node = myDiagram.findNodeForKey("3");
-    } else {
-      node = myDiagram.findNodeForKey("2");
-    }
-    
-    var model = myDiagram.model;
+                // This is the safe way to change model data
+                // GoJS will be notified that the data has changed
+                // and can update the node in the Diagram
+                // and record the change in the UndoManager
+                model.setDataProperty(node.data, "color", "#F78181");
 
-    // all model changes should happen in a transaction
-    model.startTransaction("change color");
+                model.commitTransaction("change color");
 
-    // This is the safe way to change model data
-    // GoJS will be notified that the data has changed
-    // and can update the node in the Diagram
-    // and record the change in the UndoManager
-    model.setDataProperty(node.data, "color", "#F78181");
-    //model.setDataProperty(node2.data, "color", "#F78181");
+                // outputs "red" - the model has changed!
+                console.log(node.data.color);
 
-    model.commitTransaction("change color");
+            }
 
-    // outputs "red" - the model has changed!
-    console.log(node.data.color);
-}
+            function confinedMultipleFailure() {
 
-function goToUnblockingCheckpointing(){
-  stopCluster();
-  window.location.href='../html/UnblockingCheckpointing.html';
-}
+                var node = myDiagram.findNodeForKey("2");
+                var node2 = myDiagram.findNodeForKey("3");
+                var model = myDiagram.model;
 
-function goToConfinedRecovery(){
-  stopCluster();
-  window.location.href='../html/ConfinedRecovery.html';
-}
+                // all model changes should happen in a transaction
+                model.startTransaction("change color");
 
-function goToReplicaRecovery(){
-  stopCluster();
-  window.location.href='../html/ReplicaRecovery.html';  
-}
+                // This is the safe way to change model data
+                // GoJS will be notified that the data has changed
+                // and can update the node in the Diagram
+                // and record the change in the UndoManager
+                model.setDataProperty(node.data, "color", "#F78181");
+                model.setDataProperty(node2.data, "color", "#F78181");
 
-    </script>
-</body>
+                model.commitTransaction("change color");
+
+                // outputs "red" - the model has changed!
+                console.log(node.data.color);
+            }
+
+            function confinedCascadingFailure() {
+                var node;
+                if (failure2) {
+                    node = myDiagram.findNodeForKey("3");
+                } else {
+                    node = myDiagram.findNodeForKey("2");
+                }
+
+                var model = myDiagram.model;
+
+                // all model changes should happen in a transaction
+                model.startTransaction("change color");
+
+                // This is the safe way to change model data
+                // GoJS will be notified that the data has changed
+                // and can update the node in the Diagram
+                // and record the change in the UndoManager
+                model.setDataProperty(node.data, "color", "#F78181");
+                //model.setDataProperty(node2.data, "color", "#F78181");
+
+                model.commitTransaction("change color");
+
+                // outputs "red" - the model has changed!
+                console.log(node.data.color);
+            }
+
+            function goToUnblockingCheckpointing() {
+                stopCluster();
+                window.location.href = '../html/UnblockingCheckpointing.html';
+            }
+
+            function goToConfinedRecovery() {
+                stopCluster();
+                window.location.href = '../html/ConfinedRecovery.html';
+            }
+
+            function goToReplicaRecovery() {
+                stopCluster();
+                window.location.href = '../html/ReplicaRecovery.html';
+            }
+        </script>
+    </body>
+
 </html>
-

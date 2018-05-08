@@ -4,5 +4,5 @@ scriptdir="$(dirname "$0")"
 
 cd "$scriptdir"
 
-nohup /bin/bash cascadingnodefailure.sh 8 7 4 >/dev/null 2>&1 & nohup /bin/bash connectedComponents.sh 10 4 >/dev/null 2>&1 &
+nohup /bin/bash pageRank.sh 10 6 >/dev/null 2>&1 &
 
