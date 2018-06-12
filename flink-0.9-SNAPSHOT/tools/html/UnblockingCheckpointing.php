@@ -145,15 +145,15 @@
             </h1>
         </div>
         <div>
-            <div id="content">
+            <div id="content"  class="canvas boxed">
 
-                <div class="contentStyle" id="contentInformation">
+                <div style="height: 100%; padding: 15px; " id="contentInformation">
 
 
 
                     <div id="checkpointContent">
                         <div style="font-size: 17px;">
-                            <h2>Unblocking Checkpointing Demonstration<button class="btn btn-default" onclick="window.location.href='../html/UnblockingCheckpointing.html'" style="float: right; background-color: #58FA82;">Reset</button></h2><br/></div>
+                            <h2 style="margin-top: 0px; margin-bottom: 0px;">Unblocking Checkpointing Demonstration<button class="btn btn-default" onclick="window.location.href='../html/UnblockingCheckpointing.html'" style="float: right; background-color: #58FA82;">Reset</button></h2><br/></div>
                         <div style="font-size: 17px;">
 
                             <form onsubmit="formHandler()" action="http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/html/UnblockingCheckpointing.php" method="get">
@@ -174,15 +174,16 @@
 
                             <br/><br/>
                         </div>
-
+                        <div style="width: 100%;">
                         <div>
                             <h3 style="float: left;">Execution Plan</h3>
                         </div> <br/><br/><br/>
-                        <div id="mainCanvas" class="canvas boxed" style="border: solid 1px black; height: 305px; width: 100%;">
-                            <div align="center"><textarea id="plantext" style="width: 100%; height: 265px;"></textarea></div>
+                        <div id="mainCanvas" style="border: solid 1px black; height: 340px; width: 100%;">
+                            <div align="center"><textarea id="plantext" style="width: 100%; height: 300px;"></textarea></div>
                             <div align="center" ; style="float: bottom;">
                                 <input id="draw_button" class="btn btn-default" style="background-color: #FACC74;" type="button" value="Draw" />
                             </div>
+                        </div>
                         </div>
                     </div>
 
