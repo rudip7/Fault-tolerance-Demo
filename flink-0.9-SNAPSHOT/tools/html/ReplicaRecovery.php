@@ -341,8 +341,7 @@
 
             function updateJobmanReplica() {
 
-                jobmanString = "<?php echo $_GET["
-                clusterJM "]; ?>";
+                jobmanString = "<?php echo $_GET["clusterJM"]; ?>";
 
                 if (jobmanString.length === 1) {
                     alert("Please start a Flink cluster and reload this page");
@@ -422,8 +421,7 @@
             }
 
             function updateTaskmanReplica() {
-                taskmanString = "<?php echo $_GET["
-                clusterTM "]; ?>";
+                taskmanString = "<?php echo $_GET["clusterTM"]; ?>";
 
                 if (taskmanString.length === 1) {
                     alert("Please start at least 2 Taskmanagers and reload this page");

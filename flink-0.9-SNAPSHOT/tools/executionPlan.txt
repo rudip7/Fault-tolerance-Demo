@@ -231,13 +231,14 @@ new_tm_TMP_Dir=/home/rudi/data/4
 		"contents": "Partial Solution",
 		"parallelism": "4",
 		"global_properties": [
-			{ "name": "Partitioning", "value": "RANDOM_PARTITIONED" },
+			{ "name": "Partitioning", "value": "HASH_PARTITIONED" },
+			{ "name": "Partitioned on", "value": "[0]" },
 			{ "name": "Partitioning Order", "value": "(none)" },
 			{ "name": "Uniqueness", "value": "not unique" }
 		],
 		"local_properties": [
-			{ "name": "Order", "value": "(none)" },
-			{ "name": "Grouping", "value": "not grouped" },
+			{ "name": "Order", "value": "[0:ASC]" },
+			{ "name": "Grouped on", "value": "[0]" },
 			{ "name": "Uniqueness", "value": "not unique" }
 		],
 		"estimates": [
@@ -335,7 +336,7 @@ new_tm_TMP_Dir=/home/rudi/data/4
 		"contents": "Join at main(PageRank.java:116)",
 		"parallelism": "4",
 		"predecessors": [
-			{"id": 13, "side": "first", "ship_strategy": "Hash Partition on [0]", "local_strategy": "Sort on [0:ASC]"},
+			{"id": 13, "side": "first", "ship_strategy": "Forward"},
 			{"id": 14, "side": "second", "ship_strategy": "Forward", "temp_mode": "CACHED"}
 		],
 		"driver_strategy": "Merge",
@@ -354,10 +355,10 @@ new_tm_TMP_Dir=/home/rudi/data/4
 			{ "name": "Est. Output Size", "value": "(unknown)" },
 			{ "name": "Est. Cardinality", "value": "(unknown)" }		],
 		"costs": [
-			{ "name": "Network", "value": "(unknown)" },
+			{ "name": "Network", "value": "0.0" },
 			{ "name": "Disk I/O", "value": "(unknown)" },
 			{ "name": "CPU", "value": "(unknown)" },
-			{ "name": "Cumulative Network", "value": "(unknown)" },
+			{ "name": "Cumulative Network", "value": "42.80 M" },
 			{ "name": "Cumulative Disk I/O", "value": "(unknown)" },
 			{ "name": "Cumulative CPU", "value": "(unknown)" }
 		],
@@ -394,7 +395,7 @@ new_tm_TMP_Dir=/home/rudi/data/4
 			{ "name": "Network", "value": "0.0" },
 			{ "name": "Disk I/O", "value": "0.0" },
 			{ "name": "CPU", "value": "0.0" },
-			{ "name": "Cumulative Network", "value": "(unknown)" },
+			{ "name": "Cumulative Network", "value": "42.80 M" },
 			{ "name": "Cumulative Disk I/O", "value": "(unknown)" },
 			{ "name": "Cumulative CPU", "value": "(unknown)" }
 		],
@@ -431,7 +432,7 @@ new_tm_TMP_Dir=/home/rudi/data/4
 			{ "name": "Network", "value": "0.0" },
 			{ "name": "Disk I/O", "value": "0.0" },
 			{ "name": "CPU", "value": "0.0" },
-			{ "name": "Cumulative Network", "value": "(unknown)" },
+			{ "name": "Cumulative Network", "value": "42.80 M" },
 			{ "name": "Cumulative Disk I/O", "value": "(unknown)" },
 			{ "name": "Cumulative CPU", "value": "(unknown)" }
 		],
@@ -527,13 +528,14 @@ new_tm_TMP_Dir=/home/rudi/data/4
 			{"id": 13, "ship_strategy": "Forward"}
 		],
 		"global_properties": [
-			{ "name": "Partitioning", "value": "RANDOM_PARTITIONED" },
+			{ "name": "Partitioning", "value": "HASH_PARTITIONED" },
+			{ "name": "Partitioned on", "value": "[0]" },
 			{ "name": "Partitioning Order", "value": "(none)" },
 			{ "name": "Uniqueness", "value": "not unique" }
 		],
 		"local_properties": [
-			{ "name": "Order", "value": "(none)" },
-			{ "name": "Grouping", "value": "not grouped" },
+			{ "name": "Order", "value": "[0:ASC]" },
+			{ "name": "Grouped on", "value": "[0]" },
 			{ "name": "Uniqueness", "value": "not unique" }
 		],
 		"estimates": [
@@ -562,7 +564,7 @@ new_tm_TMP_Dir=/home/rudi/data/4
 		"contents": "Bulk Iteration",
 		"parallelism": "4",
 		"predecessors": [
-			{"id": 2, "ship_strategy": "Forward"}
+			{"id": 2, "ship_strategy": "Hash Partition on [0]", "local_strategy": "Sort on [0:ASC]"}
 		],
 		"global_properties": [
 			{ "name": "Partitioning", "value": "HASH_PARTITIONED" },

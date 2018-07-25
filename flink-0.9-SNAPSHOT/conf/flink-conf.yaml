@@ -40,11 +40,11 @@ taskmanager.numberOfTaskSlots: 2
 
 parallelization.degree.default: 4
 
-confined.recovery: true # confined recovery is enabled if it is true
+confined.recovery: false # confined recovery is enabled if it is true
 
 delta.checkpoint: 0
 
-replication.recovery: false # replica recovery is enabled if it is true
+replication.recovery: true # replica recovery is enabled if it is true
 
 #==============================================================================
 # Web Frontend

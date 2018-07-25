@@ -227,57 +227,57 @@
 
 
             // PHP EXEC ------------------------------------------------------------------------------------------------------------------
-
             <?php
-header('Access-Control-Allow-Origin: *'); 
+                header('Access-Control-Allow-Origin: *'); 
 
-  if($_GET["algorithm"] == "pageRank"){
+                if($_GET["algorithm"] == "pageRank"){
 
-    if($_GET["failure"] == "FnoFailure"){
-      exec("sed -i '7s|.*|nohup /bin/bash pageRank.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
-      echo 'runDemo();';
+                if($_GET["failure"] == "FnoFailure"){
+                    exec("sed -i '7s|.*|nohup /bin/bash pageRank.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
+                    echo 'runDemo();';
 
-    } else if($_GET["failure"] == "FsingleFailure"){
-      exec("sed -i '7s|.*|nohup /bin/bash singlenodefailure.sh ".htmlspecialchars($_GET["FailedIteration"])." >/dev/null 2>\&1 \& nohup /bin/bash pageRank.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
-      echo 'runDemo();';
+                } else if($_GET["failure"] == "FsingleFailure"){
+                    exec("sed -i '7s|.*|nohup /bin/bash singlenodefailure.sh ".htmlspecialchars($_GET["FailedIteration"])." >/dev/null 2>\&1 \& nohup /bin/bash pageRank.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
+                    echo 'runDemo();';
 
-    } else if($_GET["failure"] == "FmultipleFailure"){
-      exec("sed -i '7s|.*|nohup /bin/bash multiplenodefailure.sh ".htmlspecialchars($_GET["FailedIteration"])." >/dev/null 2>\&1 \& nohup /bin/bash pageRank.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
-      echo 'runDemo();';
+                } else if($_GET["failure"] == "FmultipleFailure"){
+                    exec("sed -i '7s|.*|nohup /bin/bash multiplenodefailure.sh ".htmlspecialchars($_GET["FailedIteration"])." >/dev/null 2>\&1 \& nohup /bin/bash pageRank.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
+                    echo 'runDemo();';
 
-    } else if($_GET["failure"] == "FcascadingFailure"){
-      $first = strtok(htmlspecialchars($_GET["FailedIteration"]), ";");
-      $second = strtok(";");
-      exec("sed -i '7s|.*|nohup /bin/bash cascadingnodefailure.sh ".$first." ".$second." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \& nohup /bin/bash pageRank.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
-      echo 'runDemo();';
-    }
+                } else if($_GET["failure"] == "FcascadingFailure"){
+                    $first = strtok(htmlspecialchars($_GET["FailedIteration"]), ";");
+                    $second = strtok(";");
+                    exec("sed -i '7s|.*|nohup /bin/bash cascadingnodefailure.sh ".$first." ".$second." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \& nohup /bin/bash pageRank.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
+                    echo 'runDemo();';
+                }
 
-  }
+                }
 
-  else if($_GET["algorithm"] == "connectedComponents"){
+                else if($_GET["algorithm"] == "connectedComponents"){
 
-    if($_GET["failure"] == "FnoFailure"){
-      exec("sed -i '7s|.*|nohup /bin/bash connectedComponents.sh ".htmlspecialchars($_GET["NumberIterations"])." 0 >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
-      echo 'runDemo();';
+                if($_GET["failure"] == "FnoFailure"){
+                    exec("sed -i '7s|.*|nohup /bin/bash connectedComponents.sh ".htmlspecialchars($_GET["NumberIterations"])." 0 >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
+                    echo 'runDemo();';
 
-    } else if($_GET["failure"] == "FsingleFailure"){
-      exec("sed -i '7s|.*|nohup /bin/bash singlenodefailure.sh ".htmlspecialchars($_GET["FailedIteration"])." >/dev/null 2>\&1 \& nohup /bin/bash connectedComponents.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
-      echo 'runDemo();';
+                } else if($_GET["failure"] == "FsingleFailure"){
+                    exec("sed -i '7s|.*|nohup /bin/bash singlenodefailure.sh ".htmlspecialchars($_GET["FailedIteration"])." >/dev/null 2>\&1 \& nohup /bin/bash connectedComponents.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
+                    echo 'runDemo();';
 
-    } else if($_GET["failure"] == "FmultipleFailure"){
-      exec("sed -i '7s|.*|nohup /bin/bash multiplenodefailure.sh ".htmlspecialchars($_GET["FailedIteration"])." >/dev/null 2>\&1 \& nohup /bin/bash connectedComponents.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
-      echo 'runDemo();';
+                } else if($_GET["failure"] == "FmultipleFailure"){
+                    exec("sed -i '7s|.*|nohup /bin/bash multiplenodefailure.sh ".htmlspecialchars($_GET["FailedIteration"])." >/dev/null 2>\&1 \& nohup /bin/bash connectedComponents.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
+                    echo 'runDemo();';
 
-    } else if($_GET["failure"] == "FcascadingFailure"){
-      $first = strtok(htmlspecialchars($_GET["FailedIteration"]), ";");
-      $second = strtok(";");
-      exec("sed -i '7s|.*|nohup /bin/bash cascadingnodefailure.sh ".$first." ".$second." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \& nohup /bin/bash connectedComponents.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
-      echo 'runDemo();';
-    }
+                } else if($_GET["failure"] == "FcascadingFailure"){
+                    $first = strtok(htmlspecialchars($_GET["FailedIteration"]), ";");
+                    $second = strtok(";");
+                    exec("sed -i '7s|.*|nohup /bin/bash cascadingnodefailure.sh ".$first." ".$second." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \& nohup /bin/bash connectedComponents.sh ".htmlspecialchars($_GET["NumberIterations"])." ".htmlspecialchars($_GET["CheckpointInterval"])." >/dev/null 2>\&1 \&|' ../shellScripts/runDemo.sh");
+                    echo 'runDemo();';
+                }
 
-  }
+                }
 
-?>
+            ?>
+
 
             function sleep(ms) {
                 return new Promise(resolve => setTimeout(resolve, ms));
@@ -294,6 +294,21 @@ header('Access-Control-Allow-Origin: *');
 
             }
 
+            function updateLog() {
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var log = this.responseText;
+                        document.getElementById("confinedLog").innerHTML = log;
+                    }
+                };
+                xhttp.open("GET", "http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/php/readLog.php", true);
+
+                xhttp.send();
+
+            }
+
             async function showResult() {
                 var objDiv = document.getElementById("confinedLog");
                 while (document.getElementById("confinedLog").innerHTML.search("FINISHED") == -1) {
@@ -303,20 +318,14 @@ header('Access-Control-Allow-Origin: *');
 
                     objDiv.scrollTop = objDiv.scrollHeight;
                     <?php
-
-    if($_GET["failure"] == "FsingleFailure"){
-      echo "searchSingleFailure();";
-
-    } else if($_GET["failure"] == "FmultipleFailure"){
-      echo "searchMultipleFailure();";
-
-    } else if($_GET["failure"] == "FcascadingFailure"){
-      echo "searchCascadingFailure();";
-
-    }
-
-    ?>
-
+                        if($_GET["failure"] == "FsingleFailure"){
+                            echo "searchSingleFailure();";
+                        } else if($_GET["failure"] == "FmultipleFailure"){
+                            echo "searchMultipleFailure();";
+                        } else if($_GET["failure"] == "FcascadingFailure"){
+                            echo "searchCascadingFailure();";
+                        }
+                    ?>
                 }
                 alert("Finished running the demo");
             }
@@ -376,10 +385,9 @@ header('Access-Control-Allow-Origin: *');
 
             function updateJobmanConfined() {
 
+                debugger;
 
-
-                jobmanString = "<?php echo $_GET["
-                clusterJM "]; ?>";
+                jobmanString = "<?php echo $_GET["clusterJM"]; ?>";
 
                 if (jobmanString.length === 1) {
                     alert("Please start a Flink cluster and reload this page");
@@ -460,8 +468,7 @@ header('Access-Control-Allow-Origin: *');
 
             function updateTaskmanConfined() {
 
-                taskmanString = "<?php echo $_GET["
-                clusterTM "]; ?>";
+                taskmanString = "<?php echo $_GET["clusterTM"]; ?>";
 
                 if (taskmanString.length === 1) {
                     alert("Please start at least 2 Taskmanagers and reload this page");
@@ -490,20 +497,7 @@ header('Access-Control-Allow-Origin: *');
                 }
             }
 
-            function updateLog() {
-
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        var log = this.responseText;
-                        document.getElementById("confinedLog").innerHTML = log;
-                    }
-                };
-                xhttp.open("GET", "http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/php/readLog.php", true);
-
-                xhttp.send();
-
-            }
+            
 
             function confinedSingleFailure() {
                 var node = myDiagram.findNodeForKey("2");

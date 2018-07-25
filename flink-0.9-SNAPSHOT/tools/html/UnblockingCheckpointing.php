@@ -209,18 +209,13 @@
       if($_GET["algorithm"] == "pageRank"){
 
         if($_GET["checkpointing"] == "NoCheckpointing"){
-            exec('../../bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.PageRank ../../../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 325557 10 0 > ../../tools/executionPlan.txt
-');
+            exec('../../bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.PageRank ../../../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 325557 10 0 > ../../tools/executionPlan.txt');
 
         } else if($_GET["checkpointing"] == "TailCheckpointing"){
-            exec('../../bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.PageRankLateCpt ../../../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 325557 10 5 > ../../tools/executionPlan.txt
-');
-
+            exec('../../bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.PageRankLateCpt ../../../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 325557 10 5 > ../../tools/executionPlan.txt');
 
         } else if($_GET["checkpointing"] == "HeadCheckpointing"){
-            exec('../../bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.PageRank ../../../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 325557 10 5 > ../../tools/executionPlan.txt
-');
-
+            exec('../../bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.PageRank ../../../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 325557 10 5 > ../../tools/executionPlan.txt');
         }
 
     }
@@ -228,21 +223,15 @@
     else if($_GET["algorithm"] == "connectedComponents"){
 
         if($_GET["checkpointing"] == "NoCheckpointing"){
-            exec('../../bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ../../../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 10 0 > ../../tools/executionPlan.txt
-');
+            exec('../../bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ../../../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 10 0 > ../../tools/executionPlan.txt');
 
         } else if($_GET["checkpointing"] == "TailCheckpointing"){
-            exec('../../bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulkLateCpt ../../../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 10 5 > ../../tools/executionPlan.txt
-');
-
+            exec('../../bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulkLateCpt ../../../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 10 5 > ../../tools/executionPlan.txt');
 
         } else if($_GET["checkpointing"] == "HeadCheckpointing"){
-            exec('../../bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ../../../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 10 5 > ../../tools/executionPlan.txt
-');
+            exec('../../bin/flink info -v -c eu.stratosphere.procrustes.experiments.recovery.ConnectedComponentsBulk ../../../procrustes-flink-1.0-SNAPSHOT.jar hdfs://localhost:9000/11 hdfs://localhost:9000/outputNew11 10 5 > ../../tools/executionPlan.txt');
 
         }
-    
-
     }
 
     ?>
@@ -272,20 +261,14 @@
             renderExecutionPlan();
 
             function renderExecutionPlan() {
-
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-
                         document.getElementById("plantext").value = this.responseText;
                     };
                 }
-
-
                 xhttp.open("GET", "http://localhost:8200/Fault-tolerance-Demo/flink-0.9-SNAPSHOT/tools/php/readExecPlan.php", true);
-
                 xhttp.send();
-
             }
         </script>
     </body>
